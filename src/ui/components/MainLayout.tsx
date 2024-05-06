@@ -1,69 +1,76 @@
-import { FC, PropsWithChildren, ReactElement, useEffect, useState } from 'react';
-import BookingIcon from '/src/assets/booking.svg';
-import SearchIcon from '/src/assets/search.svg';
-import InfoIcon from '/src/assets/info.svg';
+import { FC, PropsWithChildren, useEffect, useState } from 'react';
 import Logo from '/src/assets/tree-city-solid.svg';
 import { Link } from 'react-router-dom';
-import Drawer from 'react-modern-drawer';
-import 'react-modern-drawer/dist/index.css';
-import { toast } from 'react-toastify';
 
 type Props = PropsWithChildren & {
   title?: string;
 };
 
 interface menuOption {
-  icon: ReactElement;
+  icon: string; // Cambiado a string
   route: string;
   name: string;
 }
 
 const menuOptions: menuOption[] = [
   {
-    icon: <BookingIcon />,
+    icon: '/src/assets/booking.svg',
     route: '/myReserves',
     name: 'Reserves',
   },
   {
-    icon: <SearchIcon />,
+    icon: '/src/assets/search.svg',
     route: '/search',
     name: 'Search',
   },
   {
-    icon: <InfoIcon />,
+    icon: '/src/assets/info.svg',
     route: '/about',
     name: 'Acerca de',
   },
+  {
+    icon: '/src/assets/logout.svg',
+    route: '/',
+    name: 'Login',
+  },
 ];
 
-const DesktopHeader = () => {
+const DesktopHeader: FC = () => {
   return (
     <div className='flex p-8 justify-between items-end pl-32 w-full '>
-      <Logo />
       <h1 className='text-5xl font-bold text-primary mx-4'>  ByteSpace</h1>
     </div>
   );
 };
 
-const DesktopSideBarContent = () => {
-  const path = location.pathname;
+const DesktopSideBarContent: FC = () => {
+  const [path, setPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, []);
+
   return (
     <div className='h-full flex flex-col justify-between  items-center '>
       {/*  menu */}
       <div>
-        {menuOptions.map((opt, idx) => {
-          return (
-            <div
-              key={idx}
-              className={
-                (path === opt.route ? 'fill-primary ' : ' fill-secondary  hover:fill-hover ') +
-                ' h-8 w-8 mb-12 '
-              }
-            >
-              <Link to={opt.route}>{opt.icon}</Link>
-            </div>
-          );
-        })}
+        {menuOptions.map((opt, idx) => (
+          <div
+            key={idx}
+            className={
+              (path === opt.route ? 'fill-primary ' : ' fill-secondary  hover:fill-hover ') +
+              ' h-8 w-8 mb-12 '
+            }
+          >
+            <Link to={opt.route}>
+              <img src={opt.icon} alt={opt.name} />
+            </Link>
+          </div>
+        ))}
       </div>
 
       {/** Exit button */}
@@ -72,54 +79,18 @@ const DesktopSideBarContent = () => {
 };
 
 const MainLayout: FC<Props> = ({ children, title = 'ByteSpace' }) => {
-  //a md window have 768 pixels
-  const md = 768;
-
-  //set html head metadata
-  useEffect(() => {
-    document.title = title;
-  }, []);
-
-  //state of the current windw dimension
-  const [windowDimenion, detectHW] = useState({
-    winWidth: window.innerWidth,
-    winHeight: window.innerHeight,
-  });
-
-  //detect size of the current browser window
-  const detectSize = () => {
-    detectHW({
-      winWidth: window.innerWidth,
-      winHeight: window.innerHeight,
-    });
-  };
-
-  //avoid recurrennt executions of detectSize
-  const [mounted, setMounted] = useState(false);
-
-  //run each time the window dimension changes
-  useEffect(() => {
-    //listed al the window redimensions
-    window.addEventListener('resize', detectSize);
-
-    if (!mounted) {
-      setMounted(true);
-      detectSize();
-    }
-
-    return () => {
-      window.removeEventListener('resize', detectSize);
-    };
-  }, [mounted, windowDimenion]);
-
   return (
     <div className='w-screen h-screen bg-background'>
       {/* Header */}
-      <div className='fixed w-full'>
-        {/* Aquí va el componente de encabezado */}
+      <div className='fixed'>
+        <DesktopHeader />
       </div>
-      {/* Contenido de la página */}
-      <div className='h-full w-full pt-24'>{children}</div>
+      {/* Navbar */}
+      <div className='fixed h-full w-24 pl-8 pt-36 pb-10'>
+        <DesktopSideBarContent />
+      </div>
+      {/* Page */}
+      <div className='h-full w-full pt-36 pl-28'>{children}</div>
     </div>
   );
 };

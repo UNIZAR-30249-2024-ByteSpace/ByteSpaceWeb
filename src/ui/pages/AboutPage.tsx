@@ -1,12 +1,12 @@
 import React from 'react';
 
-const SpacePage: React.FC = () => {
+const AboutPage: React.FC = () => {
   return (
     <div>
-      <h2>Space Page</h2>
+      <h2>Aboute Page</h2>
       {/* Contenido de la página */}
     </div>
   );
 };
 
-export default SpacePage;
+export default AboutPage;

@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Despacho from '/src/assets/despacho.svg';
+import Despacho from '../../assets/despacho.svg';
 import SalaComun from '/src/assets/salacomun.svg';
 import Aula from '/src/assets/aula.svg';
 import Laboratorio from '/src/assets/laboratorio.svg';

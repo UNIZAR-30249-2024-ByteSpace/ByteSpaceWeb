@@ -1,9 +1,4 @@
 import { FC, useEffect, useState } from 'react';
-import Despacho from '/src/assets/despacho.svg';
-import SalaComun from '/src/assets/salacomun.svg';
-import Aula from '/src/assets/aula.svg';
-import Laboratorio from '/src/assets/laboratorio.svg';
-import Seminario from '/src/assets/seminario.svg';
 import { Kind, Space } from '../../core/space/domain';
 import { chooseColor, SpaceIcon } from '../../utils/kindsSelector';
 
@@ -23,11 +18,8 @@ const SpaceCard: FC<Props> = ({ space }) => {
       </div>
       <div className='flex flex-col collapse xl:visible justify-center items-center '>
         <h1 style={{ color: chooseColor(space.kind) }} className={' font-bold text-6xl'}>
-          {space.price}€
+          Reservar
         </h1>
-        <h2 className='text-secondary font-bold text-2xl'>
-          {space.owner === undefined ? 'Disponible' : 'Vendido'}
-        </h2>
       </div>
     </div>
   );
