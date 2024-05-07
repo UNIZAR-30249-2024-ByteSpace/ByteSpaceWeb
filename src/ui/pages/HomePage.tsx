@@ -4,7 +4,7 @@ import { MemorieSpaceRepo } from '../../infraestructure/memory/SpaceRepo';
 import { MainLayout } from '../components/MainLayout';
 import { useEffect, useState } from 'react';
 import { SpaceList } from '../components/SpaceList';
-import { Mapa } from '../components/Mapa';
+import { MapComponent } from '../components/MapComponent';
 import { HttpSpaceRepo } from '../../infraestructure/http/SpaceRepo';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -129,7 +129,7 @@ const HomePage = () => {
           <SpaceList list={list} />
         </div>
         <div className=' h-full w-1/2 px-2  collapse md:visible'>
-          <Mapa list={list} />
+          <MapComponent/>
         </div>
       </div>
     </MainLayout>
