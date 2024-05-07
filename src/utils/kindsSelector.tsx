@@ -8,24 +8,25 @@ import Seminario from '/src/assets/seminario.svg';
 const chooseColor = (kind: Kind): string => {
   switch (kind) {
     case 'aula':
-      return '#5E81AC';
+      return '#2e8be8';
 
     case 'salacomun':
-      return '#a3be8c';
+      return '#95dd10';
 
     case 'seminario':
-      return '#bf616a';
+      return '#ecac3d';
 
     case 'laboratorio':
-      return '#b48ead';
+      return '#cc0508';
   
     case 'despacho':
-      return '#b48ead';
+      return '#d355ad';
 
     default:
       return '';
   }
 };
+
 
 const SpaceIcon = (kind: Kind) => {
   switch (kind) {

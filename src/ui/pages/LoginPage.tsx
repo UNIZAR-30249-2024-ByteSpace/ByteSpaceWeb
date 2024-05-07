@@ -26,7 +26,7 @@ const LoginPage: React.FC = () => {
       <div className='bg-secondary bg-opacity-80 p-8 rounded-lg w-96 h-80 flex flex-col justify-center items-center'>
         <h1 className="text-3xl text-center font-semibold mb-4 text-primary">ByteSpace</h1>
         <div className="mb-4">
-          <label htmlFor="username" className="block text-primary">Nombre de usuario</label>
+          <label htmlFor="username" className="block text-primary">Correo electrónico</label>
           <input
             type="text"
             id="username"

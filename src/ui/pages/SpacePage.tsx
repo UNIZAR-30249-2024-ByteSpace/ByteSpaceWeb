@@ -43,24 +43,23 @@ const SpacePage: React.FC = () => {
 
   // Espacio seleccionado de la lista
   const selectedSpace: Space = {
-    name: 'Propiedad 3',
-    id: '3',
-    address: 'Avenida academia nº12',
-    kind: 'salacomun',
+    name: 'Despacho 1',
+    id: '1',
+    address: 'Planta 1',
+    kind: 'despacho',
     price: 240000,
     lat: 41.6488,
     lng: -0.8891,
     income: 0,
-  };
+  }
 
   return (
     <MainLayout>
       <div className="flex">
         {/* Información del espacio */}
         <div className="w-1/2 p-4">
-          <h2 className="text-lg font-bold mb-2">Información del Espacio</h2>
           <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">{selectedSpace.name}</h1>
-          <p className="text-lg md:text-xl text-secondary mb-4">{selectedSpace.address}</p>
+          <p className="text-lg md:text-xl font-bold text-primary mb-4">{selectedSpace.address}</p>
           <div className="flex items-center mb-4">
             <div
               className="w-4 h-4 rounded-full mr-2"
@@ -71,7 +70,7 @@ const SpacePage: React.FC = () => {
           {/* Mostrar toda la información disponible del espacio */}
           <div className="mb-4">
             <h2 className="text-lg font-bold text-primary">Información adicional:</h2>
-            <ul className="list-disc pl-6">
+            <ul className="list-disc text-primary pl-8">
               <li>Identificador: {selectedSpace.id}</li>
               <li>Precio: {selectedSpace.price}</li>
               <li>Latitud: {selectedSpace.lat}</li>
@@ -81,7 +80,7 @@ const SpacePage: React.FC = () => {
           </div>
         </div>
         {/* Selector de fecha y hora */}
-        <div className="w-1/2 p-4">
+        <div className="w-2/5 p-4">
           {/* Selector de fecha */}
           <div className="mb-4">
             <label htmlFor="date" className="block text-sm font-medium text-gray-700">
