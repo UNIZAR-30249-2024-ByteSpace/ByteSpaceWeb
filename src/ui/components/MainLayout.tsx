@@ -15,13 +15,18 @@ interface menuOption {
 const menuOptions: menuOption[] = [
   {
     icon: '/src/assets/booking.svg',
-    route: '/myReserves',
-    name: 'Reserves',
+    route: '/home',
+    name: 'Home',
+  },
+  {
+    icon: '/src/assets/myreserves.svg',
+    route: '/myreserves',
+    name: 'Mis reservas',
   },
   {
     icon: '/src/assets/search.svg',
     route: '/search',
-    name: 'Search',
+    name: 'Buscar',
   },
   {
     icon: '/src/assets/info.svg',

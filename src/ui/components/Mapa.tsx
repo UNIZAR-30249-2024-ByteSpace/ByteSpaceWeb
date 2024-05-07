@@ -19,9 +19,17 @@ const blueIcon = L.icon({
   iconAnchor: [19, 38],
 });
 
-// Creación del mapa
+// Define los diferentes mapas para cada planta
+const maps: Record<string, string> = {
+  planta1: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  planta2: 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
+  planta3: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+  planta4: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+};
+
 const Mapa: FC<Props> = ({ list }) => {
   const center = L.latLng([41.6488, -0.8891]);
+  const [selectedPlanta, setSelectedPlanta] = useState<string>('planta1'); // Estado para la planta seleccionada
 
   const renderMarkers = () => {
     return list.map((space) => (
@@ -38,14 +46,23 @@ const Mapa: FC<Props> = ({ list }) => {
   };
 
   return (
-    <div className='w-full overflow-x-clip pr-2 h-full '>
+    <div className='w-full overflow-x-clip pr-2 h-full text-primary font-bold text-lg'>
+      {/* Selector de planta */}
+      <select value={selectedPlanta} onChange={(e) => setSelectedPlanta(e.target.value)}>
+        <option value="planta1">Planta 1</option>
+        <option value="planta2">Planta 2</option>
+        <option value="planta3">Planta 3</option>
+        <option value="planta4">Planta 4</option>
+      </select>
+
+      {/* Mapa con el TileLayer según la planta seleccionada */}
       <MapContainer
         center={center}
         zoom={13}
         scrollWheelZoom={false}
         className='w-full overflow-x-clip pr-2 h-full '
       >
-        <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+        <TileLayer url={maps[selectedPlanta]} />
         {renderMarkers()}
       </MapContainer>
     </div>
