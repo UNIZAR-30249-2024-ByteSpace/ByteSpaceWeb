@@ -52,7 +52,7 @@ const MapComponent: React.FC = () => {
   };
 
   return (
-    <div className='w-full overflow-x-clip pr-2 h-full text-primary font-bold text-lg'>
+    <div className='w-full overflow-x-clip pr-2 h-full text-primary font-bold text-xl'>
       {/* Selector de plantas */}
       <select value={selectedPlanta} onChange={handlePlantaChange}>
         <option value="planta0">Planta 0</option>

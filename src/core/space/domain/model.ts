@@ -1,13 +1,14 @@
 export type Kind = 'aula' | 'salacomun' | 'seminario' | 'laboratorio' | 'despacho';
 
 export type Space = {
-  name: string;
   id: string;
+  tamanio: number;
   kind: Kind;
-  address: string;
-  price: number;
-  income: number;
-  owner?: string;
-  lat: number;
-  lng: number;
+  maxOcupantes: number;
+  informacion: string;
+  reservable: boolean;
+  categoria: string;
+  porcentajeOcupacion: number;
+  planta: number;
+  asignadoA: string;
 };

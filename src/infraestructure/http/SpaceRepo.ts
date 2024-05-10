@@ -1,18 +1,31 @@
-import axios from './http';
-import { Space } from '../../core/space/domain/model';
+import axios from 'axios';
+
+export type Space = {
+  id: string;
+  tamanio: number;
+  kind: 'aula' | 'salacomun' | 'seminario' | 'laboratorio' | 'despacho';
+  maxOcupantes: number;
+  informacion: string;
+  reservable: boolean;
+  categoria: string;
+  porcentajeOcupacion: number;
+  planta: number;
+  asignadoA: string;
+};
 
 export class HttpSpaceRepo {
   async getAllSpaces(): Promise<Space[]> {
     interface SpaceDTO {
       _id: string;
-      name: string;
+      tamanio: number;
       kind: 'aula' | 'salacomun' | 'seminario' | 'laboratorio' | 'despacho';
-      address: string;
-      lng: number;
-      lat: number;
-      price: number;
-      baseIncome: number;
-      owner?: string;
+      maxOcupantes: number;
+      informacion: string;
+      reservable: boolean;
+      categoria: string;
+      porcentajeOcupacion: number;
+      planta: number;
+      asignadoA: string;
     }
     const response = await axios.get<SpaceDTO[]>('/spaces', {
       headers: {
@@ -20,67 +33,78 @@ export class HttpSpaceRepo {
       },
     });
     if (response.status !== 200) {
-      throw new Error('No se puedo obtener las propiedades');
+      throw new Error('No se pudo obtener las propiedades');
     }
     console.log(response.data);
 
     return response.data.map((spaceDto) => {
       const prop: Space = {
-        address: spaceDto.address,
         id: spaceDto._id,
-        income: spaceDto.baseIncome,
+        tamanio: spaceDto.tamanio,
         kind: spaceDto.kind,
-        lat: spaceDto.lat,
-        lng: spaceDto.lng,
-        name: spaceDto.name,
-        price: spaceDto.price,
-        owner: spaceDto.owner,
+        maxOcupantes: spaceDto.maxOcupantes,
+        informacion: spaceDto.informacion,
+        reservable: spaceDto.reservable,
+        categoria: spaceDto.categoria,
+        porcentajeOcupacion: spaceDto.porcentajeOcupacion,
+        planta: spaceDto.planta,
+        asignadoA: spaceDto.asignadoA,
       };
       return prop;
     });
   }
 
   async getSpaceById(id: string): Promise<Space> {
-    interface spaceDto {
-      name: string;
-      address: string;
+    interface SpaceDTO {
       _id: string;
-      price: number;
-      baseIncome: number;
+      tamanio: number;
       kind: 'aula' | 'salacomun' | 'seminario' | 'laboratorio' | 'despacho';
-      owner?: string;
+      maxOcupantes: number;
+      informacion: string;
+      reservable: boolean;
+      categoria: string;
+      porcentajeOcupacion: number;
+      planta: number;
+      asignadoA: string;
     }
-    const response = await axios.get<spaceDto>(`/spaces/${id}`, {
+    const response = await axios.get<SpaceDTO>(`/spaces/${id}`, {
       headers: {
         accept: 'application/json',
       },
     });
     if (response.status !== 200) {
-      throw new Error('No se puedo obtener los datos de la propiedad');
+      throw new Error('No se pudo obtener los datos de la propiedad');
     }
     const spaceRes = response.data;
     const space: Space = {
-      address: spaceRes.address,
       id: spaceRes._id,
-      income: spaceRes.baseIncome,
+      tamanio: spaceRes.tamanio,
       kind: spaceRes.kind,
-      lat: 0,
-      lng: 0,
-      name: spaceRes.name,
-      price: spaceRes.price,
-      owner: spaceRes.owner,
+      maxOcupantes: spaceRes.maxOcupantes,
+      informacion: spaceRes.informacion,
+      reservable: spaceRes.reservable,
+      categoria: spaceRes.categoria,
+      porcentajeOcupacion: spaceRes.porcentajeOcupacion,
+      planta: spaceRes.planta,
+      asignadoA: spaceRes.asignadoA,
     };
     console.log(space);
     return space;
   }
 
-  async reserveById(id: string, usr: string): Promise<string> {
-    const response = await axios.post<{ id: string }>(`/spaces/${id}/reserve`, {
+  async reserveById(
+    id: string,
+    usr: string,
+    fecha: Date,
+    hora_inicio: number,
+    hora_fin: number
+  ): Promise<string> {
+    const response = await axios.post<{ id: string, usr: string, fecha: Date, hora_inicio: number, hora_fin: number }>(`/spaces/${id}/reserve`, {
       ownerId: usr,
     });
 
     if (response.status !== 201) {
-      throw new Error('No se puedo obtener los datos de la propiedad');
+      throw new Error('No se pudo obtener los datos de la propiedad');
     }
     console.log(response.data);
     return response.data.id;

@@ -12,8 +12,8 @@ const SpaceCard: FC<Props> = ({ space }) => {
       <div className='flex items-center justify-between '>
         {SpaceIcon(space.kind)}
         <div className='flex flex-col '>
-          <h1 className='text-4xl font-bold ml-8 '>{space.name}</h1>
-          <h2 className='text-xl font-bold ml-8'>{space.address}</h2>
+          <h1 className='text-xl font-bold ml-8 mb-2 '>{space.informacion}</h1>
+          <h2 className='text-xl font-bold ml-8'>Planta: {space.planta}</h2>
         </div>
       </div>
       <div className='flex flex-col collapse xl:visible justify-center items-center '>
