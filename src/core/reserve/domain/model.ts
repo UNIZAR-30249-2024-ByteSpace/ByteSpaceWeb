@@ -4,5 +4,6 @@ export type Reserve = {
   horaInicio: number;
   horaFin: number,
   idPersona: string,
+  idEspacio: string,
   potencialInvalida: boolean;
 };
