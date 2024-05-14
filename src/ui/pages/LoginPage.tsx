@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { HttpUserRepo, UserCredentials } from '../../infraestructure/http/UserRepo'; // Ajusta el path según la ubicación de tu UserRepo
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const userRepo = new HttpUserRepo();
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -14,11 +16,22 @@ const LoginPage: React.FC = () => {
   };
 
   const navigate = useNavigate();
-  
-  const handleLogin = () => {
-    // Lógica la tiene Rael, solo usar bien las llamdas
-    console.log('Iniciando sesión...');
-    navigate('/home');
+
+  const handleLogin = async () => {
+    try {
+      const credentials: UserCredentials = { username, password };
+      const user = await userRepo.login(credentials);
+      console.log('Inicio de sesión exitoso', user);
+
+      // Guarda el token o realiza otras acciones necesarias con la información del usuario
+      // localStorage.setItem('token', user.token);
+
+      // Redirigir al usuario a la página principal
+      navigate('/home');
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+      // Aquí puedes agregar lógica adicional para manejar el error, como mostrar un mensaje al usuario
+    }
   };
 
   return (
