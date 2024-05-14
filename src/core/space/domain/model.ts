@@ -3,7 +3,7 @@ export type Kind = 'aula' | 'salacomun' | 'seminario' | 'laboratorio' | 'despach
 export type Space = {
   id: string;
   tamanio: number;
-  kind: Kind;
+  kind: Kind; // Utiliza la enumeración Kind en lugar de un tipo string
   maxOcupantes: number;
   informacion: string;
   reservable: boolean;

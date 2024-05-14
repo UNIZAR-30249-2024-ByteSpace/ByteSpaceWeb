@@ -1,9 +1,12 @@
 import axios from 'axios';
 
+export type Kind = 'aula' | 'salacomun' | 'seminario' | 'laboratorio' | 'despacho';
+
+
 export type Space = {
   id: string;
   tamanio: number;
-  kind: 'aula' | 'salacomun' | 'seminario' | 'laboratorio' | 'despacho';
+  kind: Kind; // Utiliza la enumeración Kind en lugar de un tipo string
   maxOcupantes: number;
   informacion: string;
   reservable: boolean;
@@ -13,12 +16,14 @@ export type Space = {
   asignadoA: string;
 };
 
+
 export class HttpSpaceRepo {
+  
   async getAllSpaces(): Promise<Space[]> {
     interface SpaceDTO {
       _id: string;
       tamanio: number;
-      kind: 'aula' | 'salacomun' | 'seminario' | 'laboratorio' | 'despacho';
+      tipo: string; // Cambiado de 'kind' a 'tipo' para reflejar el nombre del campo en los datos del backend
       maxOcupantes: number;
       informacion: string;
       reservable: boolean;
@@ -27,31 +32,45 @@ export class HttpSpaceRepo {
       planta: number;
       asignadoA: string;
     }
-    const response = await axios.get<SpaceDTO[]>('/spaces', {
-      headers: {
-        accept: 'application/json',
-      },
-    });
-    if (response.status !== 200) {
-      throw new Error('No se pudo obtener las propiedades');
-    }
-    console.log(response.data);
 
-    return response.data.map((spaceDto) => {
-      const prop: Space = {
-        id: spaceDto._id,
-        tamanio: spaceDto.tamanio,
-        kind: spaceDto.kind,
-        maxOcupantes: spaceDto.maxOcupantes,
-        informacion: spaceDto.informacion,
-        reservable: spaceDto.reservable,
-        categoria: spaceDto.categoria,
-        porcentajeOcupacion: spaceDto.porcentajeOcupacion,
-        planta: spaceDto.planta,
-        asignadoA: spaceDto.asignadoA,
-      };
-      return prop;
-    });
+    console.log("PASO 1 ");
+    
+    try {
+      const response = await axios.get<SpaceDTO[]>('http://localhost:3000/api/spaces/', {
+        headers: {
+          accept: 'application/json',
+        },
+      });
+
+      console.log("PASO 2 ");
+
+      console.log('Datos recibidos del backend:', response.data);
+
+      if (response.status !== 200) {
+        throw new Error('No se pudo obtener las propiedades');
+      }
+      
+      return response.data.map((spaceDto) => {
+        console.log('DTO del espacio:', spaceDto);
+        const prop: Space = {
+          id: spaceDto._id,
+          tamanio: spaceDto.tamanio,
+          kind: mapTipoToKind(spaceDto.tipo), // Mapear el tipo al tipo Kind
+          maxOcupantes: spaceDto.maxOcupantes,
+          informacion: spaceDto.informacion,
+          reservable: spaceDto.reservable,
+          categoria: spaceDto.categoria,
+          porcentajeOcupacion: spaceDto.porcentajeOcupacion,
+          planta: spaceDto.planta,
+          asignadoA: spaceDto.asignadoA,
+        };
+        console.log('Espacio mapeado:', prop);
+        return prop;
+      });
+    } catch (error) {
+      console.error('Error al obtener los espacios:', error);
+      throw error;
+    }
   }
 
   async getSpaceById(id: string): Promise<Space> {
@@ -108,5 +127,22 @@ export class HttpSpaceRepo {
     }
     console.log(response.data);
     return response.data.id;
+  }
+}
+
+function mapTipoToKind(tipo: string): Kind {
+  switch (tipo) {
+    case 'aula':
+      return 'aula';
+    case 'salacomun':
+      return 'salacomun';
+    case 'seminario':
+      return 'seminario';
+    case 'laboratorio':
+      return 'laboratorio';
+    case 'despacho':
+      return 'despacho';
+    default:
+      throw new Error(`Tipo de espacio desconocido: ${tipo}`);
   }
 }
