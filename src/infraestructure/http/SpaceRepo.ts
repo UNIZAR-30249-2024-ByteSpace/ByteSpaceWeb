@@ -77,7 +77,7 @@ export class HttpSpaceRepo {
     interface SpaceDTO {
       _id: string;
       tamanio: number;
-      kind: 'aula' | 'salacomun' | 'seminario' | 'laboratorio' | 'despacho';
+      tipo: string; // Cambiado de 'kind' a 'tipo' para reflejar el nombre del campo en los datos del backend
       maxOcupantes: number;
       informacion: string;
       reservable: boolean;
@@ -86,30 +86,45 @@ export class HttpSpaceRepo {
       planta: number;
       asignadoA: string;
     }
-    const response = await axios.get<SpaceDTO>(`/spaces/${id}`, {
-      headers: {
-        accept: 'application/json',
-      },
-    });
-    if (response.status !== 200) {
-      throw new Error('No se pudo obtener los datos de la propiedad');
+
+    try {
+      const response = await axios.get<SpaceDTO>(`http://localhost:3000/api/spaces/${id}`, {
+        headers: {
+          accept: 'application/json',
+        },
+      });
+  
+      console.log("PASO 2 ");
+      console.log('Datos recibidos del backend:', response.data);
+  
+      if (response.status !== 200) {
+        throw new Error('No se pudo obtener las propiedades');
+      }
+      
+      const spaceDto = response.data;
+      console.log('DTO del espacio:', spaceDto);
+  
+      const space: Space = {
+        id: spaceDto._id,
+        tamanio: spaceDto.tamanio,
+        kind: mapTipoToKind(spaceDto.tipo),
+        maxOcupantes: spaceDto.maxOcupantes,
+        informacion: spaceDto.informacion,
+        reservable: spaceDto.reservable,
+        categoria: spaceDto.categoria,
+        porcentajeOcupacion: spaceDto.porcentajeOcupacion,
+        planta: spaceDto.planta,
+        asignadoA: spaceDto.asignadoA,
+      };
+  
+      console.log('Espacio mapeado:', space);
+      return space;
+    } catch (error) {
+      console.error('Error al obtener el espacio:', error);
+      throw error;
     }
-    const spaceRes = response.data;
-    const space: Space = {
-      id: spaceRes._id,
-      tamanio: spaceRes.tamanio,
-      kind: spaceRes.kind,
-      maxOcupantes: spaceRes.maxOcupantes,
-      informacion: spaceRes.informacion,
-      reservable: spaceRes.reservable,
-      categoria: spaceRes.categoria,
-      porcentajeOcupacion: spaceRes.porcentajeOcupacion,
-      planta: spaceRes.planta,
-      asignadoA: spaceRes.asignadoA,
-    };
-    console.log(space);
-    return space;
   }
+  
 
   async reserveById(
     id: string,
