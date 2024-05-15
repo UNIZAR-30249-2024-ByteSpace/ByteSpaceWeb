@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HttpUserRepo, UserCredentials } from '../../infraestructure/http/UserRepo'; // Ajusta el path según la ubicación de tu UserRepo
+import { HttpUserRepo, UserCredentials } from '../../infraestructure/http/UserRepo';
+import { useAuth, AuthContextType } from '../components/AuthContext'; // Ajusta la ruta según la ubicación de tu AuthContext
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const userRepo = new HttpUserRepo();
+  const authContext = useAuth(); // Obtén el contexto de autenticación en tu componente de función
+  const userRepo = new HttpUserRepo(authContext); // Pasa el contexto de autenticación al constructor de HttpUserRepo
+  const navigate = useNavigate();
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -15,19 +18,14 @@ const LoginPage: React.FC = () => {
     setPassword(e.target.value);
   };
 
-  const navigate = useNavigate();
-
   const handleLogin = async () => {
     try {
       const credentials: UserCredentials = { username, password };
       const user = await userRepo.login(credentials);
       console.log('Inicio de sesión exitoso', user);
 
-      // Guarda el token o realiza otras acciones necesarias con la información del usuario
-      // localStorage.setItem('token', user.token);
-
       // Redirigir al usuario a la página principal
-      navigate('/home');
+      navigate('/home')
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       // Aquí puedes agregar lógica adicional para manejar el error, como mostrar un mensaje al usuario

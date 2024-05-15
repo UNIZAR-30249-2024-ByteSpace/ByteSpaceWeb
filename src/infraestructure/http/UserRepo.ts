@@ -1,5 +1,12 @@
 import axios from 'axios';
 
+// Definimos AuthContextType aquí o importamos desde AuthContext.tsx si es necesario
+interface AuthContextType {
+    user: { username: string } | null;
+    login: (token: string) => void;
+    logout: () => void;
+}
+
 export type UserCredentials = {
   username: string;
   password: string;
@@ -13,9 +20,11 @@ export type User = {
 };
 
 export class HttpUserRepo {
+  constructor(private readonly authContext: AuthContextType) {} // Recibe el contexto de autenticación como argumento
+
   async login(credentials: UserCredentials): Promise<User> {
     interface UserDTO {
-      _id: string;
+      id: string;
       username: string;
       email: string;
       token: string;
@@ -35,11 +44,14 @@ export class HttpUserRepo {
 
       const userDto = response.data;
       const user: User = {
-        id: userDto._id,
         username: userDto.username,
         email: userDto.email,
+        id: userDto.id,
         token: userDto.token,
       };
+
+      // Guardar el token de usuario en el contexto de autenticación
+      this.authContext.login(user.token); // Utiliza el contexto de autenticación pasado como argumento
 
       return user;
     } catch (error) {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useAuth } from '../components/AuthContext'; // Ajusta la ruta según tu estructura de archivos
 import { MainLayout } from '../components/MainLayout';
 import { ISpaceRepo, Space } from '../../core/space/domain';
 import { chooseColor } from '../../utils/kindsSelector';
@@ -12,6 +13,7 @@ minDate.setDate(minDate.getDate() + 1);
 
 const SpacePage: React.FC = () => {
   const { spaceId } = useParams<{ spaceId: string }>();
+  const { user } = useAuth(); // Obtener el usuario del contexto de autenticación
   const [space, setSpace] = useState<Space | null>(null);
   const [date, setDate] = useState<Date | null>(null);
   const [startTime, setStartTime] = useState<string>('08:00');
@@ -96,21 +98,40 @@ const SpacePage: React.FC = () => {
         console.error('Debe seleccionar una fecha y hora de inicio y fin');
         return;
       }
-      
-      // Verificar si spaceId tiene un valor antes de llamar a reserveById
+
       if (spaceId) {
-        const response = await spaceRepo.reserveById(spaceId, 'usuario1', date, parseInt(startTime.split(':')[0]), parseInt(endTime.split(':')[0]));
-        console.log('Reserva exitosa:', response);
-        toast.success('Reserva exitosa', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        });
+        if (user) { // Verificar si el usuario está autenticado
+          const response = await spaceRepo.reserveById(
+            spaceId,
+            user.username, // Usar el nombre de usuario autenticado
+            date,
+            parseInt(startTime.split(':')[0]),
+            parseInt(endTime.split(':')[0])
+          );
+          console.log('Reserva exitosa:', response);
+          toast.success('Reserva exitosa', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          });
+        } else {
+          console.error('El usuario no está autenticado');
+          toast.error('Debe estar autenticado para hacer una reserva', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          });
+        }
       } else {
         console.error('El ID del espacio es undefined');
       }

@@ -13,7 +13,7 @@ const MyReservationPage: React.FC = () => {
 
   useEffect(() => {
     reserveRepo
-      .getAllReserves('usuario2')
+      .getAllReserves('818289')
       .then((list) => {
         console.log('Received reserves:', list); // Añadir información de depuración
         setReserveList(list);
