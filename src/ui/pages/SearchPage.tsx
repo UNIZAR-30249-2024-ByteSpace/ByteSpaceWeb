@@ -51,14 +51,16 @@ const SearchPage: React.FC = () => {
     }
   };
 
+
   return (
     <MainLayout>
-      <div className="flex justify-center items-center mr-8">
-        <div className="grid grid-cols-2 gap-6 w-full">
-{/* Selector de Categoria */}
-<div>
+      <div className='w-full h-full flex justify-center items-center md:pb-40 px-6'>
+        {/* Formulario de búsqueda */}
+        <div className='h-full md:w-1/2 px-2 w-full '>
+          {/* Selectores y botones */}
+          <div>
             <p className="text-lg md:text-xl font-bold text-primary mb-4">Categoria:</p>
-            <select id="category" name="category" className="p-2 border border-gray-300 rounded-md w-full" value={categoria} onChange={handleCategoryChange}>
+            <select id="category" name="category" className="p-2 border border-gray-300 rounded-md w-full mb-4" value={categoria} onChange={handleCategoryChange}>
               <option value="aula">Aula</option>
               <option value="salacomun">Sala común</option>
               <option value="laboratorio">Laboratorio</option>
@@ -66,35 +68,30 @@ const SearchPage: React.FC = () => {
               <option value="seminario">Seminario</option>
             </select>
           </div>
-          {/* Selector de Tamaño */}
           <div>
             <p className="text-lg md:text-xl font-bold text-primary mb-4">Tamaño:</p>
-            <select id="size" name="size" className="p-2 border border-gray-300 rounded-md w-full" value={tamanio} onChange={handleSizeChange}>
+            <select id="size" name="size" className="p-2 border border-gray-300 rounded-md w-full mb-4" value={tamanio} onChange={handleSizeChange}>
               {[...Array(7)].map((_, i) => (
                 <option key={i} value={i * 50}>Más de {i * 50} metros cuadrados</option>
               ))}
             </select>
           </div>
-          {/* Selector de Capacidad */}
           <div>
             <p className="text-lg md:text-xl font-bold text-primary mb-4">Capacidad:</p>
-            <select id="capacity" name="capacity" className="p-2 border border-gray-300 rounded-md w-full"  value={capacidad} onChange={handleCapacityChange}>
+            <select id="capacity" name="capacity" className="p-2 border border-gray-300 rounded-md w-full mb-4" value={capacidad} onChange={handleCapacityChange}>
               {[...Array(11)].map((_, i) => (
                 <option key={i} value={i * 20}>Más de {i * 20} personas</option>
               ))}
             </select>
           </div>
-          {/* Selector de Planta */}
           <div>
             <p className="text-lg md:text-xl font-bold text-primary mb-4">Planta:</p>
-            <select id="floor" name="floor" className="p-2 border border-gray-300 rounded-md w-full" value={planta} onChange={handleFloorChange}>
+            <select id="floor" name="floor" className="p-2 border border-gray-300 rounded-md w-full mb-4" value={planta} onChange={handleFloorChange}>
               {[...Array(5)].map((_, i) => (
                 <option key={i} value={i}>{i}</option>
               ))}
             </select>
           </div>
-
-          {/* Botones */}
           <div className="mt-8 col-span-2 flex justify-center">
             <div>
               <NavLink to="/home" 
@@ -112,11 +109,10 @@ const SearchPage: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Mostrar los espacios */}
-      <div>
-        <SpaceList list={espacios} />
+        {/* Resultados */}
+        <div className='h-full md:w-1/2 px-2 w-full '>
+          <SpaceList list={espacios} />
+        </div>
       </div>
     </MainLayout>
   );

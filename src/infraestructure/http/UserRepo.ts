@@ -2,6 +2,7 @@ import axios from 'axios';
 
 // Definimos AuthContextType aquí o importamos desde AuthContext.tsx si es necesario
 interface AuthContextType {
+    saveUserId(id: string): unknown;
     user: { username: string } | null;
     login: (token: string) => void;
     logout: () => void;
