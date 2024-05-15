@@ -6,6 +6,8 @@ import { ReserveList } from '../components/ReserveList';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../components/AuthContext'; // Importa el hook useAuth
+import { useNavigate } from 'react-router-dom';
+
 
 const reserveRepo: IReserveRepo = new HttpReserveRepo();
 
@@ -14,6 +16,8 @@ const MyReservationPage: React.FC = () => {
   const { user } = useAuth(); // Obtén el ID del usuario del contexto de autenticación
   const [validReserves, setValidReserves] = useState<Reserve[]>([]);
   const [invalidReserves, setInvalidReserves] = useState<Reserve[]>([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (user) { // Verifica que haya un ID de usuario antes de hacer la solicitud
       reserveRepo
@@ -46,6 +50,13 @@ const MyReservationPage: React.FC = () => {
     setInvalidReserves(updatedInvalidReserves);
   }, [reservesList]);
 
+
+  function wait(ms: number): Promise<void> {
+    return new Promise(resolve => {
+      setTimeout(resolve, ms);
+    });
+  }
+
   const handleCancelReserve = async (id: string) => {
     try {
       const canceledReserveId = await reserveRepo.cancelReserveById(id);
@@ -60,6 +71,7 @@ const MyReservationPage: React.FC = () => {
         progress: undefined,
         theme: 'light',
       });
+
       // Actualizar la lista de reservas después de la cancelación
       const updatedReserves = reservesList.filter((reserve) => reserve.id !== canceledReserveId);
       setReserveList(updatedReserves);
@@ -69,6 +81,10 @@ const MyReservationPage: React.FC = () => {
       const updatedInvalidReserves = updatedReserves.filter(reserve => reserve.potencialInvalida);
       setValidReserves(updatedValidReserves);
       setInvalidReserves(updatedInvalidReserves);
+      
+      await wait(3000);
+      navigate('/home')
+            
     } catch (error) {
       console.error('Error al cancelar la reserva:', error);
       toast.error('Error al cancelar la reserva', {
