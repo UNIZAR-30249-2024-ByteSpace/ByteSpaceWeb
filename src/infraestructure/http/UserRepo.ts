@@ -53,6 +53,9 @@ export class HttpUserRepo {
       // Guardar el token de usuario en el contexto de autenticación
       this.authContext.login(user.token); // Utiliza el contexto de autenticación pasado como argumento
 
+      // Además, guarda el id del usuario en el contexto de autenticación
+      this.authContext.saveUserId(user.id);
+
       return user;
     } catch (error) {
       console.error('Error al iniciar sesión:', error);

@@ -5,34 +5,37 @@ import { MainLayout } from '../components/MainLayout';
 import { ReserveList } from '../components/ReserveList';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../components/AuthContext'; // Importa el hook useAuth
 
 const reserveRepo: IReserveRepo = new HttpReserveRepo();
 
 const MyReservationPage: React.FC = () => {
   const [reservesList, setReserveList] = useState<Reserve[]>([]);
+  const { user } = useAuth(); // Obtén el ID del usuario del contexto de autenticación
 
   useEffect(() => {
-    reserveRepo
-      .getAllReserves('818289')
-      .then((list) => {
-        console.log('Received reserves:', list); // Añadir información de depuración
-        setReserveList(list);
-      })
-      .catch((error) => {
-        console.log("Hola"); // Añadir información de depuración
-        console.log('Error fetching reserves:', error); // Añadir información de depuración
-        toast.error('Error al obtener las reservas', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
+    if (user) { // Verifica que haya un ID de usuario antes de hacer la solicitud
+      reserveRepo
+        .getAllReserves(user.id) // Utiliza el ID del usuario actual
+        .then((list) => {
+          console.log('Received reserves:', list); // Añadir información de depuración
+          setReserveList(list);
+        })
+        .catch((error) => {
+          console.log('Error fetching reserves:', error); // Añadir información de depuración
+          toast.error('Error al obtener las reservas', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          });
         });
-      });
-  }, []);
+    }
+  }, [user]); // Asegúrate de ejecutar el efecto cuando cambie el ID
   
 
   const handleCancelReserve = async (id: string) => {
