@@ -4,8 +4,8 @@ import { MainLayout } from '../components/MainLayout';
 import { ISpaceRepo, Space } from '../../core/space/domain';
 import { chooseColor } from '../../utils/kindsSelector';
 import { HttpSpaceRepo } from '../../infraestructure/http/SpaceRepo';
-import { NavLink, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { NavLink, useParams  } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 
 const spaceRepo: ISpaceRepo = new HttpSpaceRepo();
@@ -18,7 +18,7 @@ const SpacePage: React.FC = () => {
   const [space, setSpace] = useState<Space | null>(null);
   const [date, setDate] = useState<Date | null>(null);
   const [startTime, setStartTime] = useState<string>('08:00');
-  const [endTime, setEndTime] = useState<string>('08:30');
+  const [endTime, setEndTime] = useState<string>('09:00');
 
   useEffect(() => {
     const fetchSpace = async () => {
@@ -95,8 +95,18 @@ const SpacePage: React.FC = () => {
   // Función para manejar la reserva
   const handleReservation = async () => {
     try {
-      if (!date || !startTime || !endTime) {
+      if (!date || !startTime || !endTime || startTime >= endTime) {
         console.error('Debe seleccionar una fecha y hora de inicio y fin');
+        toast.error('Debe seleccionar una fecha y hora de inicio y fin', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
         return;
       }
   
@@ -110,8 +120,8 @@ const SpacePage: React.FC = () => {
             horaInicio: parseInt(startTime.split(':')[0]),
             horaFin: parseInt(endTime.split(':')[0]) 
           });
-          console.log('Reserva exitosa:', response.data);
-          toast.success('Reserva exitosa', {
+          console.log('Reserva exitosa:', response.data.message);
+          toast.success(response.data.message, {
             position: 'top-right',
             autoClose: 5000,
             hideProgressBar: false,
@@ -121,6 +131,7 @@ const SpacePage: React.FC = () => {
             progress: undefined,
             theme: 'light',
           });
+
         } else {
           console.error('El usuario no está autenticado');
           toast.error('Debe estar autenticado para hacer una reserva', {
@@ -159,6 +170,7 @@ const SpacePage: React.FC = () => {
 
   return (
     <MainLayout>
+      <ToastContainer />
       <div className="flex">
         <div className="w-1/2 p-4">
           <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">{space.informacion}</h1>

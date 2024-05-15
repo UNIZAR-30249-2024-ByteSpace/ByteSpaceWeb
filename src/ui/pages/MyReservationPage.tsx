@@ -9,7 +9,9 @@ import { useAuth } from '../components/AuthContext'; // Importa el hook useAuth
 import { useNavigate } from 'react-router-dom';
 
 
+
 const reserveRepo: IReserveRepo = new HttpReserveRepo();
+
 
 const MyReservationPage: React.FC = () => {
   const [reservesList, setReserveList] = useState<Reserve[]>([]);
@@ -49,6 +51,7 @@ const MyReservationPage: React.FC = () => {
     setValidReserves(updatedValidReserves);
     setInvalidReserves(updatedInvalidReserves);
   }, [reservesList]);
+  
 
 
   function wait(ms: number): Promise<void> {
