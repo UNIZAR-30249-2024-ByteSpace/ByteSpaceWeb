@@ -12,7 +12,6 @@ interface Props {
   space: Space;
 }
 
-// Actualizar los colores según diga Juan
 const SmallSpaceCard: FC<Props> = ({ space }) => {
   const chooseColor = (kind: Kind): string => {
     switch (kind) {

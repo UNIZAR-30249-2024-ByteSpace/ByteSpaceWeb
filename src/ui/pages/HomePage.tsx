@@ -40,7 +40,7 @@ const HomePage = () => {
 
     // Obtener el nombre y el correo electrónico del usuario
     const userName = user ? user.username : '';
-    const userEmail = user ? user.id : '';
+    const userEmail = user ? user.rol : '';
 
     return (
         <MainLayout>
