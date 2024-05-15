@@ -83,9 +83,6 @@ const MyReservationPage: React.FC = () => {
       });
     }
   };
-  
-
-
 
   return (
     <MainLayout>

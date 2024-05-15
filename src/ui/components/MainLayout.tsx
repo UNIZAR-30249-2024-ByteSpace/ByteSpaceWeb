@@ -1,6 +1,11 @@
 import { FC, PropsWithChildren, useEffect, useState } from 'react';
 import Logo from '/src/assets/tree-city-solid.svg';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../components/AuthContext'; // Importa el hook useAuth
+
+const capitalizeFirstLetter = (word: string): string => {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+};
 
 type Props = PropsWithChildren & {
   title?: string;
@@ -46,9 +51,18 @@ const menuOptions: menuOption[] = [
 ];
 
 const DesktopHeader: FC = () => {
+  const { user } = useAuth(); // Obtén el usuario del contexto de autenticación
+  const userName = user ? user.id : '';
+  
+  const userRol = user ? capitalizeFirstLetter(user.rol) : '';
+  
   return (
-    <div className='flex p-8 justify-between items-end pl-32 w-full '>
-      <h1 className='text-5xl font-bold text-primary mx-4'>  ByteSpace</h1>
+    <div className='flex p-8 justify-between items-end pl-32 pr-8 w-full '>
+      <h1 className='text-5xl font-bold text-primary mx-4'>ByteSpace</h1>
+      <div className="ml-80">
+  <span className="text-xl font-bold text-primary">Usuario:</span> <span className="text-xl text-primary">{userName}</span><br />
+  <span className="text-xl font-bold text-primary">Rol:</span> <span className="text-xl text-primary">{userRol}</span>
+</div>
     </div>
   );
 };
@@ -89,6 +103,7 @@ const DesktopSideBarContent: FC = () => {
 };
 
 const MainLayout: FC<Props> = ({ children, title = 'ByteSpace' }) => {
+
   return (
     <div className='w-screen h-screen bg-background'>
       {/* Header */}

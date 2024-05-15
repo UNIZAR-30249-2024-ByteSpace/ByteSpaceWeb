@@ -3,7 +3,11 @@ import axios from 'axios';
 // Definimos AuthContextType aquí o importamos desde AuthContext.tsx si es necesario
 interface AuthContextType {
     saveUserId(id: string): unknown;
-    user: { username: string } | null;
+    saveUserRol(rol: string): unknown; // Método para guardar el rol del usuario
+    user: { 
+        username: string;
+        rol: string; // Añade el atributo "rol" al usuario en AuthContextType
+    } | null;
     login: (token: string) => void;
     logout: () => void;
 }
@@ -17,17 +21,20 @@ export type User = {
   id: string;
   username: string;
   email: string;
+  rol: string; // Añade el atributo "rol" al usuario
   token: string;
 };
 
 export class HttpUserRepo {
   constructor(private readonly authContext: AuthContextType) {} // Recibe el contexto de autenticación como argumento
+  
 
   async login(credentials: UserCredentials): Promise<User> {
     interface UserDTO {
       id: string;
       username: string;
       email: string;
+      rol: string; // Actualiza el DTO para incluir "rol"
       token: string;
     }
 
@@ -47,6 +54,7 @@ export class HttpUserRepo {
       const user: User = {
         username: userDto.username,
         email: userDto.email,
+        rol: userDto.rol, // Asigna el valor de "rol" del DTO al usuario
         id: userDto.id,
         token: userDto.token,
       };
@@ -56,6 +64,7 @@ export class HttpUserRepo {
 
       // Además, guarda el id del usuario en el contexto de autenticación
       this.authContext.saveUserId(user.id);
+      this.authContext.saveUserRol(user.rol);
 
       return user;
     } catch (error) {

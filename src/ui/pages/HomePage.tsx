@@ -1,18 +1,21 @@
-import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { ISpaceRepo, Space } from '../../core/space/domain';
 import { MainLayout } from '../components/MainLayout';
-import { useEffect, useState } from 'react';
 import { SpaceList } from '../components/SpaceList';
 import { MapComponent } from '../components/MapComponent';
 import { HttpSpaceRepo } from '../../infraestructure/http/SpaceRepo';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../components/AuthContext'; // Importa el hook useAuth
+
+const spaceRepo: ISpaceRepo = new HttpSpaceRepo();
 
 const HomePage = () => {
+    const { user } = useAuth(); // Obtén el usuario del contexto de autenticación
     const spaceRepo: ISpaceRepo = new HttpSpaceRepo();
     const [spacesList, setSpacesList] = useState<Space[]>([]);
     const [selectedFloor, setSelectedFloor] = useState<number>(0); // Añadir estado para la planta seleccionada
-  
+
     useEffect(() => {
         spaceRepo
             .getAllSpaces()
@@ -34,6 +37,10 @@ const HomePage = () => {
     }, []);
 
     const filteredSpacesList = spacesList.filter(space => space.planta === selectedFloor); // Filtrar los espacios por planta seleccionada
+
+    // Obtener el nombre y el correo electrónico del usuario
+    const userName = user ? user.username : '';
+    const userEmail = user ? user.id : '';
 
     return (
         <MainLayout>
