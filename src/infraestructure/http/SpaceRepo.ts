@@ -2,11 +2,10 @@ import axios from 'axios';
 
 export type Kind = 'aula' | 'salacomun' | 'seminario' | 'laboratorio' | 'despacho';
 
-
 export type Space = {
   id: string;
   tamanio: number;
-  kind: Kind; // Utiliza la enumeración Kind en lugar de un tipo string
+  tipo: Kind; // Utiliza la enumeración Kind en lugar de un tipo string
   maxOcupantes: number;
   informacion: string;
   reservable: boolean;
@@ -55,7 +54,7 @@ export class HttpSpaceRepo {
         const prop: Space = {
           id: spaceDto._id,
           tamanio: spaceDto.tamanio,
-          kind: mapTipoToKind(spaceDto.tipo), // Mapear el tipo al tipo Kind
+          tipo: mapTipoToKind(spaceDto.tipo), // Mapear el tipo al tipo Kind
           maxOcupantes: spaceDto.maxOcupantes,
           informacion: spaceDto.informacion,
           reservable: spaceDto.reservable,
@@ -107,7 +106,7 @@ export class HttpSpaceRepo {
       const space: Space = {
         id: spaceDto._id,
         tamanio: spaceDto.tamanio,
-        kind: mapTipoToKind(spaceDto.tipo),
+        tipo: mapTipoToKind(spaceDto.tipo),
         maxOcupantes: spaceDto.maxOcupantes,
         informacion: spaceDto.informacion,
         reservable: spaceDto.reservable,

@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import { ISpaceRepo, Space } from '../../core/space/domain';
-import { MemorieSpaceRepo } from '../../infraestructure/memory/SpaceRepo';
 import { MainLayout } from '../components/MainLayout';
 import { useEffect, useState } from 'react';
 import { SpaceList } from '../components/SpaceList';
