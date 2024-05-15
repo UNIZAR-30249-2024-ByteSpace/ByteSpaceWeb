@@ -7,7 +7,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../components/AuthContext'; // Importa el hook useAuth
 
+
 const reserveRepo: IReserveRepo = new HttpReserveRepo();
+
 
 const MyReservationPage: React.FC = () => {
   const [reservesList, setReserveList] = useState<Reserve[]>([]);
@@ -45,6 +47,7 @@ const MyReservationPage: React.FC = () => {
     setValidReserves(updatedValidReserves);
     setInvalidReserves(updatedInvalidReserves);
   }, [reservesList]);
+  
 
   const handleCancelReserve = async (id: string) => {
     try {
