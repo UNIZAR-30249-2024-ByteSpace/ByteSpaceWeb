@@ -42,11 +42,6 @@ const menuOptions: menuOption[] = [
     icon: '/src/assets/logout.svg',
     route: '/',
     name: 'Login',
-  },
-  {
-    icon: '/src/assets/admin.svg',
-    route: '/admin',
-    name: 'Admin',
   }
 ];
 
@@ -68,6 +63,7 @@ const DesktopHeader: FC = () => {
 };
 
 const DesktopSideBarContent: FC = () => {
+  const { user } = useAuth(); // Obtener el usuario del contexto de autenticación
   const [path, setPath] = useState(window.location.pathname);
 
   useEffect(() => {
@@ -78,29 +74,43 @@ const DesktopSideBarContent: FC = () => {
     return () => window.removeEventListener('popstate', handleLocationChange);
   }, []);
 
-  return (
-    <div className='h-full flex flex-col justify-between  items-center '>
-      {/*  menu */}
-      <div>
-        {menuOptions.map((opt, idx) => (
-          <div
-            key={idx}
-            className={
-              (path === opt.route ? 'fill-primary ' : ' fill-secondary  hover:fill-hover ') +
-              ' h-8 w-8 mb-12 '
-            }
-          >
-            <Link to={opt.route}>
-              <img src={opt.icon} alt={opt.name} />
-            </Link>
-          </div>
-        ))}
-      </div>
+    // Definir una función para verificar si el usuario tiene el rol necesario para ver el botón de Admin
+    const hasAdminRole = () => {
+      // Verificar si el usuario existe y si tiene uno de los roles específicos
+      return user && (user.rol === 'gerente' || user.rol === 'gerente-docente-investigador');
+    };
 
-      {/** Exit button */}
-    </div>
-  );
-};
+    return (
+      <div className='h-full flex flex-col justify-between items-center'>
+        {/* Menu */}
+        <div>
+          {menuOptions.map((opt, idx) => (
+            <div
+              key={idx}
+              className={
+                (path === opt.route ? 'fill-primary ' : ' fill-secondary  hover:fill-hover ') +
+                ' h-8 w-8 mb-12 '
+              }
+            >
+              <Link to={opt.route}>
+                <img src={opt.icon} alt={opt.name} />
+              </Link>
+            </div>
+          ))}
+          {/* Mostrar el botón de Admin solo si el usuario tiene el rol necesario */}
+          {hasAdminRole() && (
+            <div className='fill-secondary hover:fill-hover h-8 w-8 mb-12'>
+              <Link to='/admin'>
+                <img src='/src/assets/admin.svg' alt='Admin' />
+              </Link>
+            </div>
+          )}
+        </div>
+  
+        {/* Exit button */}
+      </div>
+    );
+  };
 
 const MainLayout: FC<Props> = ({ children, title = 'ByteSpace' }) => {
 
