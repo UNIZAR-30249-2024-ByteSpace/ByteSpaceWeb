@@ -5,4 +5,5 @@ export interface IReserveRepo {
   getAllReserves(id: string): Promise<Reserve[]>; // Todos los reservas del usuario
   getAllReservesAdmin(): Promise<Reserve[]>;
   cancelReserveById(id: string): Promise<string>; // Realizar reserva
+  acceptReserveById(id: string): Promise<string>; // Realizar reserva
 }

@@ -10,9 +10,10 @@ interface Props {
   list: Reserve[];
   size?: Sizes;
   onCancel: (id: string) => void; // Callback for cancel action
+  onAccept: (id: string) => void;
 }
 
-const ReserveList: FC<Props> = ({ list, size, onCancel }) => {
+const ReserveList: FC<Props> = ({ list, size, onCancel, onAccept }) => {
   return (
     <div className='w-full overflow-y-scroll overflow-x-clip pr-2 h-full'>
       {list.map((r, k) => (
@@ -20,7 +21,7 @@ const ReserveList: FC<Props> = ({ list, size, onCancel }) => {
           {size === 'small' ? (
             <SmallReserveCard reserve={r} />
           ) : (
-            <ReserveCard reserve={r} onCancel={onCancel} />
+            <ReserveCard reserve={r} onCancel={onCancel} onAccept={onAccept} />
           )}
         </div>
       ))}

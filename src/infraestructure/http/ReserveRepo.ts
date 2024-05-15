@@ -15,6 +15,7 @@ export interface IReserveRepo {
     getAllReservesAdmin(): Promise<Reserve[]>;
     getReserveById(id: string): Promise<Reserve>;
     cancelReserveById(id: string): Promise<string>; // Actualizar el tipo de retorno
+    acceptReserveById(id: string): Promise<string>; // Actualizar el tipo de retorno
     createReserve(idEspacio: string, idPersona: string, fecha: Date, horaInicio: number, horaFin: number): Promise<string>;
 }
   
@@ -96,6 +97,24 @@ export class HttpReserveRepo implements IReserveRepo {
     }
   }
 
+  async acceptReserveById(id: string): Promise<string> { // Cambiado el tipo de retorno
+    try {
+      const response = await axios.post<{ id: string }>(`http://localhost:3000/api/reserve/${id}/accept`, {
+        headers: {
+          accept: 'application/json',
+        },
+      });
+      if (response.status !== 200) {
+        throw new Error('No se pudo aceptar la reserva');
+      }
+      
+      return response.data.id; // Retornar el ID de la reserva aceptada
+    } catch (error) {
+      console.error('Error al aceptar la reserva:', error);
+      throw error;
+    }
+  }
+
   async createReserve(
     idEspacio: string,
     idPersona: string,
@@ -122,4 +141,5 @@ export class HttpReserveRepo implements IReserveRepo {
       throw error;
     }
   }
+  
 }

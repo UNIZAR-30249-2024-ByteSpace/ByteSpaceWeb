@@ -119,8 +119,6 @@ const SmallReserveCard: FC<Props> = ({ reserve }) => {
   // Encontrar el espacio correspondiente al idEspacio de la reserva
   const space = spacesList.find(space => space.id === reserve.idEspacio);
 
-
-
     return (
     <div className=' flex  justify-center items-center border-opacity-30 border w-full rounded-3xl border-secondary  py-2 px-4  mt-3 h-28'>
         {space && SpaceIcon(space.tipo)}

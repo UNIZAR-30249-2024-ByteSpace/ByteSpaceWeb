@@ -8,8 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../components/AuthContext'; // Importa el hook useAuth
 import { useNavigate } from 'react-router-dom';
 
-
-
 const reserveRepo: IReserveRepo = new HttpReserveRepo();
 
 
@@ -87,7 +85,46 @@ const MyReservationPage: React.FC = () => {
       
       await wait(3000);
       navigate('/home')
-            
+
+    } catch (error) {
+      console.error('Error al cancelar la reserva:', error);
+      toast.error('Error al cancelar la reserva', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    }
+  };
+
+  const handleAcceptReserve = async (id: string) => {
+    try {
+      const canceledReserveId = await reserveRepo.acceptReserveById(id);
+      // Lógica adicional después de cancelar la reserva, si es necesario
+      toast.success(`Reserva aceptada exitosamente: ${id}`, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+      
+      // Actualizar listas de reservas válidas e inválidas
+      const updatedValidReserves = reservesList.filter(reserve => !reserve.potencialInvalida);
+      const updatedInvalidReserves = reservesList.filter(reserve => reserve.potencialInvalida);
+      setValidReserves(updatedValidReserves);
+      setInvalidReserves(updatedInvalidReserves);
+      
+      await wait(3000);
+      navigate('/home')
+
     } catch (error) {
       console.error('Error al cancelar la reserva:', error);
       toast.error('Error al cancelar la reserva', {
@@ -109,11 +146,11 @@ const MyReservationPage: React.FC = () => {
       <div className='w-full h-full flex justify-center items-center md:pb-40 px-6'>
         <div className='h-full md:w-1/2 px-2 w-full '>
           <h2 className="text-2xl font-bold mb-4 text-primary">Mis reservas</h2>
-          <ReserveList list={validReserves} onCancel={handleCancelReserve} />
+          <ReserveList list={validReserves} onCancel={handleCancelReserve} onAccept={handleAcceptReserve} />
         </div>
         <div className='h-full md:w-1/2 px-2 w-full '>
           <h2 className="text-2xl font-bold mb-4 text-primary">Reservas potencialmente inválidas</h2>
-          <ReserveList list={invalidReserves} onCancel={handleCancelReserve} />
+          <ReserveList list={invalidReserves} onCancel={handleCancelReserve} onAccept={handleAcceptReserve} />
         </div>
       </div>
     </MainLayout>
