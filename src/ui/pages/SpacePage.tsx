@@ -6,6 +6,7 @@ import { chooseColor } from '../../utils/kindsSelector';
 import { HttpSpaceRepo } from '../../infraestructure/http/SpaceRepo';
 import { NavLink, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const spaceRepo: ISpaceRepo = new HttpSpaceRepo();
 const minDate = new Date();
@@ -98,17 +99,18 @@ const SpacePage: React.FC = () => {
         console.error('Debe seleccionar una fecha y hora de inicio y fin');
         return;
       }
-
+  
       if (spaceId) {
         if (user) { // Verificar si el usuario está autenticado
-          const response = await spaceRepo.reserveById(
-            spaceId,
-            user.username, // Usar el nombre de usuario autenticado
-            date,
-            parseInt(startTime.split(':')[0]),
-            parseInt(endTime.split(':')[0])
-          );
-          console.log('Reserva exitosa:', response);
+          console.log("Entro a reservar")
+          console.log("User: " + user.id)
+          const response = await axios.post(`http://localhost:3000/api/spaces/${spaceId}/reserve`, {
+            idUsuario: user.id, // Pasar el nombre de usuario autenticado como idUsuario
+            fecha: date,
+            horaInicio: parseInt(startTime.split(':')[0]),
+            horaFin: parseInt(endTime.split(':')[0]) 
+          });
+          console.log('Reserva exitosa:', response.data);
           toast.success('Reserva exitosa', {
             position: 'top-right',
             autoClose: 5000,
@@ -149,6 +151,7 @@ const SpacePage: React.FC = () => {
       });
     }
   };
+  
 
   if (!space) {
     return <div>Cargando...</div>;
