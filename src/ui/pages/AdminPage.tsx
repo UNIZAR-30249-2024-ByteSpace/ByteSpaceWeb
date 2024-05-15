@@ -50,14 +50,6 @@ const AdminPage: React.FC = () => {
     setInvalidReserves(updatedInvalidReserves);
   }, [reservesList]);
   
-
-
-  function wait(ms: number): Promise<void> {
-    return new Promise(resolve => {
-      setTimeout(resolve, ms);
-    });
-  }
-
   const handleCancelReserve = async (id: string) => {
     try {
       const canceledReserveId = await reserveRepo.cancelReserveById(id);
@@ -72,20 +64,36 @@ const AdminPage: React.FC = () => {
         progress: undefined,
         theme: 'light',
       });
-
-      // Actualizar la lista de reservas después de la cancelación
-      const updatedReserves = reservesList.filter((reserve) => reserve.id !== canceledReserveId);
-      setReserveList(updatedReserves);
-      
-      // Actualizar listas de reservas válidas e inválidas
-      const updatedValidReserves = updatedReserves.filter(reserve => !reserve.potencialInvalida);
-      const updatedInvalidReserves = updatedReserves.filter(reserve => reserve.potencialInvalida);
+  
+      if (user) { // Verifica que haya un ID de usuario antes de hacer la solicitud
+        reserveRepo
+          .getAllReservesAdmin() // Utiliza el ID del usuario actual
+          .then((list) => {
+            console.log('Received reserves:', list); // Añadir información de depuración
+            // Actualizar la lista de reservas después de la cancelación
+            setReserveList(list);
+          })
+          .catch((error) => {
+            console.log('Error fetching reserves:', error); // Añadir información de depuración
+            toast.error('Error al obtener las reservas', {
+              position: 'top-right',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+            });
+          });
+      }
+  
+      // Actualizar listas de reservas válidas e inválidas cuando reservesList cambie
+      const updatedValidReserves = reservesList.filter(reserve => !reserve.potencialInvalida);
+      const updatedInvalidReserves = reservesList.filter(reserve => reserve.potencialInvalida);
       setValidReserves(updatedValidReserves);
       setInvalidReserves(updatedInvalidReserves);
-      
-      await wait(3000);
-      navigate('/home')
-
+  
     } catch (error) {
       console.error('Error al cancelar la reserva:', error);
       toast.error('Error al cancelar la reserva', {
@@ -115,15 +123,36 @@ const AdminPage: React.FC = () => {
         progress: undefined,
         theme: 'light',
       });
-      
-      // Actualizar listas de reservas válidas e inválidas
+
+      if (user) { // Verifica que haya un ID de usuario antes de hacer la solicitud
+        reserveRepo
+          .getAllReservesAdmin() // Utiliza el ID del usuario actual
+          .then((list) => {
+            console.log('Received reserves:', list); // Añadir información de depuración
+            // Actualizar la lista de reservas después de la cancelación
+            setReserveList(list);
+          })
+          .catch((error) => {
+            console.log('Error fetching reserves:', error); // Añadir información de depuración
+            toast.error('Error al obtener las reservas', {
+              position: 'top-right',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+            });
+          });
+      }
+  
+      // Actualizar listas de reservas válidas e inválidas cuando reservesList cambie
       const updatedValidReserves = reservesList.filter(reserve => !reserve.potencialInvalida);
       const updatedInvalidReserves = reservesList.filter(reserve => reserve.potencialInvalida);
       setValidReserves(updatedValidReserves);
       setInvalidReserves(updatedInvalidReserves);
-      
-      await wait(3000);
-      navigate('/home')
+
 
     } catch (error) {
       console.error('Error al aceptar la reserva:', error);
