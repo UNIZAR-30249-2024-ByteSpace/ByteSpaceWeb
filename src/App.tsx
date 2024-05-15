@@ -7,6 +7,7 @@ import LoginPage from './ui/pages/LoginPage';
 import MyReservationPage from './ui/pages/MyReservationPage';
 import SpacePage from './ui/pages/SpacePage';
 import PrivateRoute from './ui/components/PrivateRoute';
+import AdminPage from './ui/pages/AdminPage';
 import { AuthProvider } from './ui/components/AuthContext'; 
 
 const App: React.FC = () => {
@@ -22,6 +23,7 @@ const App: React.FC = () => {
           </Route>
           <Route path="/about" element={<AboutPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </Router>
     </AuthProvider>

@@ -12,12 +12,11 @@ const reserveRepo: IReserveRepo = new HttpReserveRepo();
 const MyReservationPage: React.FC = () => {
   const [reservesList, setReserveList] = useState<Reserve[]>([]);
   const { user } = useAuth(); // Obtén el ID del usuario del contexto de autenticación
-  const [validReserves, setValidReserves] = useState<Reserve[]>([]);
-  const [invalidReserves, setInvalidReserves] = useState<Reserve[]>([]);
+
   useEffect(() => {
     if (user) { // Verifica que haya un ID de usuario antes de hacer la solicitud
       reserveRepo
-        .getAllReserves(user.id) // Utiliza el ID del usuario actual
+        .getAllReservesAdmin() // Obtiene todas las reservas
         .then((list) => {
           console.log('Received reserves:', list); // Añadir información de depuración
           setReserveList(list);
@@ -37,14 +36,7 @@ const MyReservationPage: React.FC = () => {
         });
     }
   }, [user]); // Asegúrate de ejecutar el efecto cuando cambie el ID
-
-  useEffect(() => {
-    // Actualizar listas de reservas válidas e inválidas cuando reservesList cambie
-    const updatedValidReserves = reservesList.filter(reserve => !reserve.potencialInvalida);
-    const updatedInvalidReserves = reservesList.filter(reserve => reserve.potencialInvalida);
-    setValidReserves(updatedValidReserves);
-    setInvalidReserves(updatedInvalidReserves);
-  }, [reservesList]);
+  
 
   const handleCancelReserve = async (id: string) => {
     try {
@@ -63,12 +55,6 @@ const MyReservationPage: React.FC = () => {
       // Actualizar la lista de reservas después de la cancelación
       const updatedReserves = reservesList.filter((reserve) => reserve.id !== canceledReserveId);
       setReserveList(updatedReserves);
-      
-      // Actualizar listas de reservas válidas e inválidas
-      const updatedValidReserves = updatedReserves.filter(reserve => !reserve.potencialInvalida);
-      const updatedInvalidReserves = updatedReserves.filter(reserve => reserve.potencialInvalida);
-      setValidReserves(updatedValidReserves);
-      setInvalidReserves(updatedInvalidReserves);
     } catch (error) {
       console.error('Error al cancelar la reserva:', error);
       toast.error('Error al cancelar la reserva', {
@@ -83,20 +69,20 @@ const MyReservationPage: React.FC = () => {
       });
     }
   };
-  
 
-
+  const validReserves = reservesList.filter(reserve => !reserve.potencialInvalida);
+  const invalidReserves = reservesList.filter(reserve => reserve.potencialInvalida);
 
   return (
     <MainLayout>
       <ToastContainer />
       <div className='w-full h-full flex justify-center items-center md:pb-40 px-6'>
         <div className='h-full md:w-1/2 px-2 w-full '>
-          <h2 className="text-2xl font-bold mb-4 text-primary">Mis reservas</h2>
+          <h2 className="text-2xl font-bold mb-4 text-primary">Reservas validas</h2>
           <ReserveList list={validReserves} onCancel={handleCancelReserve} />
         </div>
         <div className='h-full md:w-1/2 px-2 w-full '>
-          <h2 className="text-2xl font-bold mb-4 text-primary">Reservas potencialmente inválidas</h2>
+          <h2 className="text-2xl font-bold mb-4 text-primary">Reservas inválidas</h2>
           <ReserveList list={invalidReserves} onCancel={handleCancelReserve} />
         </div>
       </div>

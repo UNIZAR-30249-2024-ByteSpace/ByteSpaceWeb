@@ -12,6 +12,7 @@ export type Reserve = {
 
 export interface IReserveRepo {
     getAllReserves(id: string): Promise<Reserve[]>;
+    getAllReservesAdmin(): Promise<Reserve[]>;
     getReserveById(id: string): Promise<Reserve>;
     cancelReserveById(id: string): Promise<string>; // Actualizar el tipo de retorno
     createReserve(idEspacio: string, idPersona: string, fecha: Date, horaInicio: number, horaFin: number): Promise<string>;
@@ -35,6 +36,25 @@ export class HttpReserveRepo implements IReserveRepo {
       return response.data;
     } catch (error) {
       console.error('Error al obtener las reservas:', error);
+      throw error;
+    }
+  }
+
+  async getAllReservesAdmin(): Promise<Reserve[]> {
+    try {
+      const response = await axios.get<Reserve[]>('http://localhost:3000/api/reserve/admin', {
+        headers: {
+          accept: 'application/json',
+        },
+      });
+
+      if (response.status !== 200) {
+        throw new Error('No se pudieron obtener las reservas del admin');
+      }
+      
+      return response.data;
+    } catch (error) {
+      console.error('Error al obtener las reservas del admin:', error);
       throw error;
     }
   }

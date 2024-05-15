@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import jwt_decode from 'jwt-decode';
 
 export interface AuthContextType {
     user: { 

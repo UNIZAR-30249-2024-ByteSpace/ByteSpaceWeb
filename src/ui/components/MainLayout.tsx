@@ -38,6 +38,11 @@ const menuOptions: menuOption[] = [
     route: '/',
     name: 'Login',
   },
+  {
+    icon: '/src/assets/admin.svg',
+    route: '/admin',
+    name: 'Admin',
+  }
 ];
 
 const DesktopHeader: FC = () => {
