@@ -5,19 +5,21 @@ export interface AuthContextType {
         id: string;
         username: string;
         rol: string; // Nuevo atributo para el rol del usuario
+        departamento?: string; // Nuevo atributo para el rol del usuario
     } | null;
     login: (username: string) => void;
     logout: () => void;
     saveUserId: (id: string) => void; // Nuevo método para guardar el ID del usuario
     saveUserRol: (rol: string) => void; // Nuevo método para guardar el rol del usuario
+    saveUserDepartamento: (departamento: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [user, setUser] = useState<{ id: string; username: string; rol: string } | null>(null); // Incluye el rol del usuario
+    const [user, setUser] = useState<{ id: string; username: string; rol: string; departamento: string;} | null>(null); // Incluye el rol del usuario
 
-    const login = (username: string) => setUser({ id: '', username, rol: '' });
+    const login = (username: string) => setUser({ id: '', username, rol: '', departamento: '' });
     const logout = () => setUser(null);
 
     // Nuevo método para guardar el ID del usuario
@@ -29,8 +31,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(prevUser => prevUser ? { ...prevUser, rol: rol } : null);
     };
 
+    const saveUserDepartamento = (departamento: string) => {
+        setUser(prevUser => prevUser ? { ...prevUser, departamento: departamento } : null);
+    };
+
+
+
     return (
-        <AuthContext.Provider value={{ user, login, logout, saveUserId, saveUserRol }}>
+        <AuthContext.Provider value={{ user, login, logout, saveUserId, saveUserRol, saveUserDepartamento }}>
             {children}
         </AuthContext.Provider>
     );

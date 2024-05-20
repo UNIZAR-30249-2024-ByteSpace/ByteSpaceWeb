@@ -7,6 +7,13 @@ const capitalizeFirstLetter = (word: string): string => {
   return word.charAt(0).toUpperCase() + word.slice(1);
 };
 
+const rolesPermitidos = [
+  "Investigador contratado",
+  "Docente-investigador",
+  "Gerente-docente-investigador",
+  "Tecnico de laboratorio"
+];
+
 type Props = PropsWithChildren & {
   title?: string;
 };
@@ -48,15 +55,22 @@ const menuOptions: menuOption[] = [
 const DesktopHeader: FC = () => {
   const { user } = useAuth(); // Obtén el usuario del contexto de autenticación
   const userName = user ? user.id : '';
+  console.log(user?.departamento)
   
   const userRol = user ? capitalizeFirstLetter(user.rol) : '';
+  const userDepartamento = user && user.departamento ? capitalizeFirstLetter(user.departamento) : '';
+
+  const rolMensaje = rolesPermitidos.includes(userRol)
+  ? userDepartamento
+  : "No puede estar adscrito a ningún departamento";
   
   return (
     <div className='flex p-8 justify-between items-end pl-32 pr-8 w-full '>
       <h1 className='text-5xl font-bold text-primary mx-4'>ByteSpace</h1>
       <div className="ml-80">
-  <span className="text-xl font-bold text-primary">Usuario:</span> <span className="text-xl text-primary">{userName}</span><br />
-  <span className="text-xl font-bold text-primary">Rol:</span> <span className="text-xl text-primary">{userRol}</span>
+      <span className="text-l font-bold text-primary">Usuario:</span> <span className="text-l text-primary">{userName}</span><br />
+      <span className="text-l font-bold text-primary">Rol:</span> <span className="text-l text-primary">{userRol}</span><br />
+      <span className="text-l font-bold text-primary">Departamento:</span><span className="text-l text-primary"> {rolMensaje}</span>
 </div>
     </div>
   );

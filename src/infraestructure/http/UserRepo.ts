@@ -4,9 +4,11 @@ import axios from 'axios';
 interface AuthContextType {
     saveUserId(id: string): unknown;
     saveUserRol(rol: string): unknown; // Método para guardar el rol del usuario
+    saveUserDepartamento(departamento: string): unknown; // Método para guardar el rol del usuario
     user: { 
         username: string;
         rol: string; // Añade el atributo "rol" al usuario en AuthContextType
+        departamento : string;
     } | null;
     login: (token: string) => void;
     logout: () => void;
@@ -22,6 +24,7 @@ export type User = {
   username: string;
   email: string;
   rol: string; // Añade el atributo "rol" al usuario
+  departamento : string;
   token: string;
 };
 
@@ -35,6 +38,7 @@ export class HttpUserRepo {
       username: string;
       email: string;
       rol: string; // Actualiza el DTO para incluir "rol"
+      departamento : string;
       token: string;
     }
 
@@ -55,6 +59,7 @@ export class HttpUserRepo {
         username: userDto.username,
         email: userDto.email,
         rol: userDto.rol, // Asigna el valor de "rol" del DTO al usuario
+        departamento: userDto.departamento,
         id: userDto.id,
         token: userDto.token,
       };
@@ -65,6 +70,7 @@ export class HttpUserRepo {
       // Además, guarda el id del usuario en el contexto de autenticación
       this.authContext.saveUserId(user.id);
       this.authContext.saveUserRol(user.rol);
+      this.authContext.saveUserDepartamento(user.departamento);
 
       return user;
     } catch (error) {
