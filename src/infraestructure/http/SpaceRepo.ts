@@ -9,7 +9,7 @@ export type Space = {
   maxOcupantes: number;
   informacion: string;
   reservable: boolean;
-  categoria: string;
+  categoria: Kind;
   porcentajeOcupacion: number;
   planta: number;
   asignadoA: string;
@@ -58,7 +58,7 @@ export class HttpSpaceRepo {
           maxOcupantes: spaceDto.maxOcupantes,
           informacion: spaceDto.informacion,
           reservable: spaceDto.reservable,
-          categoria: spaceDto.categoria,
+          categoria: mapTipoToKind(spaceDto.categoria),
           porcentajeOcupacion: spaceDto.porcentajeOcupacion,
           planta: spaceDto.planta,
           asignadoA: spaceDto.asignadoA,
@@ -117,7 +117,7 @@ export class HttpSpaceRepo {
         maxOcupantes: spaceDto['0'].maxOcupantes,
         informacion: spaceDto['0'].informacion,
         reservable: spaceDto['0'].reservable,
-        categoria: spaceDto['0'].categoria,
+        categoria: mapTipoToKind(spaceDto['0'].categoria),
         porcentajeOcupacion: spaceDto['0'].porcentajeOcupacion,
         planta: spaceDto['0'].planta,
         asignadoA: spaceDto['0'].asignadoA,

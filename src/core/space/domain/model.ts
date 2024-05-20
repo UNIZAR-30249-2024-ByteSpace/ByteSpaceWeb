@@ -7,7 +7,7 @@ export type Space = {
   maxOcupantes: number;
   informacion: string;
   reservable: boolean;
-  categoria: string; // Utiliza la enumeración Kind en lugar de un tipo string
+  categoria: Kind; // Utiliza la enumeración Kind en lugar de un tipo string
   porcentajeOcupacion: number;
   planta: number;
   asignadoA: string;

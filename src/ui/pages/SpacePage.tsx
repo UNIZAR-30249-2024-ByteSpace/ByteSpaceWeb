@@ -178,9 +178,9 @@ const SpacePage: React.FC = () => {
           <div className="flex items-center mb-8">
             <div
               className="w-4 h-4 rounded-full mr-2"
-              style={{ backgroundColor: chooseColor(space.tipo) }}
+              style={{ backgroundColor: chooseColor(space.categoria) }}
             ></div>
-            <p className="text-lg md:text-xl font-bold text-primary ">{space.tipo}</p>
+            <p className="text-lg md:text-xl font-bold text-primary ">{space.categoria}</p>
           </div>
           <div className="mb-10">
             <div className="grid grid-cols-2 gap-4 text-lg">
