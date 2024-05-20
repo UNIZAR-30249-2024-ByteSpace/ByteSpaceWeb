@@ -189,7 +189,7 @@ const SpacePage: React.FC = () => {
                 <p>{space.tamanio} m2</p>
               </div>
               <div className="flex items-center">
-                <p className="font-bold text-primary mr-2">Ocupación:</p>
+                <p className="font-bold text-primary mr-2">Nº máximo de ocupantes:</p>
                 <p>{space.maxOcupantes} personas</p>
               </div>
               <div className="flex items-center">

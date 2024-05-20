@@ -7,18 +7,18 @@ import { toast } from 'react-toastify';
 
 const SearchPage: React.FC = () => {
   const [categoria, setCategoria] = useState('aula');
-  const [tamanio, setTamanio] = useState(0);
   const [capacidad, setCapacidad] = useState(0);
   const [planta, setPlanta] = useState(0);
   const [espacios, setEspacios] = useState([]); // Estado para almacenar los espacios
+  const [id, setId] = useState<string>('');
+
+  const handleIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setId(event.target.value);
+  };
+
   // Controlador de evento para el selector de categoría
   const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCategoria(event.target.value);
-  };
-
-  // Controlador de evento para el selector de tamaño
-  const handleSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setTamanio(parseInt(event.target.value));
   };
 
   // Controlador de evento para el selector de capacidad
@@ -30,12 +30,13 @@ const SearchPage: React.FC = () => {
   const handleFloorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPlanta(parseInt(event.target.value));
   };
+
   const handleSearch = async () => {
     try {
       const response = await axios.get('http://localhost:3000/api/spaces/search', {
         params: {
+          id,
           categoria,
-          tamanio,
           capacidad,
           planta
         }
@@ -52,12 +53,26 @@ const SearchPage: React.FC = () => {
   };
 
 
+
+
   return (
     <MainLayout>
       <div className='w-full h-full flex justify-center items-center md:pb-40 px-6'>
         {/* Formulario de búsqueda */}
         <div className='h-full md:w-1/2 px-2 w-full '>
           {/* Selectores y botones */}
+          <div>
+            <p className="text-lg md:text-xl font-bold text-primary mb-4">Identificador:</p>
+              <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              className="p-2 border border-gray-300 rounded-md w-full mb-4"
+              value={id}
+              onChange={handleIdChange}
+              placeholder="Introduce el identificador de un espacio"
+            />
+          </div>
           <div>
             <p className="text-lg md:text-xl font-bold text-primary mb-4">Categoria:</p>
             <select id="category" name="category" className="p-2 border border-gray-300 rounded-md w-full mb-4" value={categoria} onChange={handleCategoryChange}>
@@ -69,15 +84,7 @@ const SearchPage: React.FC = () => {
             </select>
           </div>
           <div>
-            <p className="text-lg md:text-xl font-bold text-primary mb-4">Tamaño:</p>
-            <select id="size" name="size" className="p-2 border border-gray-300 rounded-md w-full mb-4" value={tamanio} onChange={handleSizeChange}>
-              {[...Array(7)].map((_, i) => (
-                <option key={i} value={i * 50}>Más de {i * 50} metros cuadrados</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <p className="text-lg md:text-xl font-bold text-primary mb-4">Capacidad:</p>
+            <p className="text-lg md:text-xl font-bold text-primary mb-4">Número máximo de ocupantes:</p>
             <select id="capacity" name="capacity" className="p-2 border border-gray-300 rounded-md w-full mb-4" value={capacidad} onChange={handleCapacityChange}>
               {[...Array(11)].map((_, i) => (
                 <option key={i} value={i * 20}>Más de {i * 20} personas</option>

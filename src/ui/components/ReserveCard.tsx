@@ -46,7 +46,7 @@ const ReserveCard: FC<Props> = ({ reserve, onCancel, onAccept }) => {
           <>
             {SpaceIcon(space.tipo)}
             <div className='flex flex-col'>
-              <h1 className='text-xl font-bold ml-8 mb-2'>Reserva {reserve.id}</h1>
+              <h1 className='text-xl font-bold ml-8 mb-2'>{space.informacion}</h1>
               <p className='ml-8'>Fecha: {formattedDate}</p>
               <p className='ml-8'>Hora: {startTime} - {endTime}</p>
               <p className='ml-8'>Reservado por: {reserve.idPersona}</p>
