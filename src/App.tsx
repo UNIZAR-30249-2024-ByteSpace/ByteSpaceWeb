@@ -1,3 +1,11 @@
+/*  Laboratorio de Ingeniería del Software - Béjar Herández, Rubén
+* Proyecto:             ByteSpace
+* Fichero:              App.tsx
+* Desarrolladores:             
+*                       Ruiz Borao, Juan José - 756640            
+*                       Clariana Pascual, Rael - 760617
+*                       Pellicer Barco, Juan - 818138.
+*/
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './ui/pages/HomePage';

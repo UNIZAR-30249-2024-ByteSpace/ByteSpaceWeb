@@ -1,3 +1,11 @@
+/*  Laboratorio de Ingeniería del Software - Béjar Herández, Rubén
+* Proyecto:             ByteSpace
+* Fichero:              MapComponent.tsx
+* Desarrolladores:             
+*                       Ruiz Borao, Juan José - 756640            
+*                       Clariana Pascual, Rael - 760617
+*                       Pellicer Barco, Juan - 818138.
+*/
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';

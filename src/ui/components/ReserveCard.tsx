@@ -1,3 +1,11 @@
+/*  Laboratorio de Ingeniería del Software - Béjar Herández, Rubén
+* Proyecto:             ByteSpace
+* Fichero:              ReserveCard.tsx
+* Desarrolladores:             
+*                       Ruiz Borao, Juan José - 756640            
+*                       Clariana Pascual, Rael - 760617
+*                       Pellicer Barco, Juan - 818138.
+*/
 import { FC, useEffect, useState } from 'react';
 import { Reserve } from '../../core/reserve/domain';
 import { ISpaceRepo, Space } from '../../core/space/domain';

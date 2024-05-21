@@ -1,3 +1,11 @@
+/*  Laboratorio de Ingeniería del Software - Béjar Herández, Rubén
+* Proyecto:             ByteSpace
+* Fichero:              MainLayout.tsx
+* Desarrolladores:             
+*                       Ruiz Borao, Juan José - 756640            
+*                       Clariana Pascual, Rael - 760617
+*                       Pellicer Barco, Juan - 818138.
+*/
 import { FC, PropsWithChildren, useEffect, useState } from 'react';
 import Logo from '/src/assets/tree-city-solid.svg';
 import { Link } from 'react-router-dom';

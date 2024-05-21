@@ -1,3 +1,11 @@
+/*  Laboratorio de Ingeniería del Software - Béjar Herández, Rubén
+* Proyecto:             ByteSpace
+* Fichero:              SpacePage.tsx
+* Desarrolladores:             
+*                       Ruiz Borao, Juan José - 756640            
+*                       Clariana Pascual, Rael - 760617
+*                       Pellicer Barco, Juan - 818138.
+*/
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../components/AuthContext'; // Ajusta la ruta según tu estructura de archivos
 import { MainLayout } from '../components/MainLayout';
