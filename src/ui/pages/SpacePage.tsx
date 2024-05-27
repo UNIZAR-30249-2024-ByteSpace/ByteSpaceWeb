@@ -27,6 +27,8 @@ const SpacePage: React.FC = () => {
   const [date, setDate] = useState<Date | null>(null);
   const [startTime, setStartTime] = useState<string>('08:00');
   const [endTime, setEndTime] = useState<string>('09:00');
+  const [attendees, setAttendees] = useState<number>(1); // Estado para el número de asistentes
+
 
   useEffect(() => {
     const fetchSpace = async () => {
@@ -82,6 +84,10 @@ const SpacePage: React.FC = () => {
     setEndTime(selectedEndTime);
   };
 
+  const handleAttendeesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAttendees(parseInt(e.target.value, 10));
+  };
+
   const generateTimeOptions = () => {
     const options = [];
     let time = new Date();
@@ -126,7 +132,8 @@ const SpacePage: React.FC = () => {
             idUsuario: user.id, // Pasar el nombre de usuario autenticado como idUsuario
             fecha: date,
             horaInicio: parseInt(startTime.split(':')[0]),
-            horaFin: parseInt(endTime.split(':')[0]) 
+            horaFin: parseInt(endTime.split(':')[0]),
+            asistentes: attendees // Añadir el número de asistentes
           });
           console.log('Reserva exitosa:', response.data.message);
           toast.success(response.data.message, {
@@ -212,7 +219,8 @@ const SpacePage: React.FC = () => {
           </div>
         </div>
         <div className="w-2/5 p-4">
-          <div className="mb-16">
+          <div className="grid grid-cols-2 gap-4 mb-16">
+            <div>
             <p className="text-lg md:text-xl font-bold text-primary mb-4">Fecha de reserva</p>
             <input
               type="date"
@@ -223,6 +231,21 @@ const SpacePage: React.FC = () => {
               min={minDate.toISOString().split('T')[0]}
               onChange={(e) => handleDateChange(new Date(e.target.value))}
             />
+            </div>
+            <div>
+            <p className="text-lg md:text-xl font-bold text-primary mb-4">Número de asistentes</p>
+            <input
+              type="number"
+              id="attendees"
+              name="attendees"
+              className="custom-number-selector"
+              style={{ fontSize: '1.3rem', color: 'text-primary', lineHeight: '2rem' }}
+              min="1"
+              max={space.maxOcupantes}
+              value={attendees}
+              onChange={handleAttendeesChange}
+            />
+          </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>

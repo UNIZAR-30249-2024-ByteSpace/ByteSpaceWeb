@@ -138,12 +138,17 @@ export class HttpSpaceRepo {
     usr: string,
     fecha: Date,
     hora_inicio: number,
-    hora_fin: number
+    hora_fin: number,
+    asistentes: number 
   ): Promise<string> {
-    const response = await axios.post<{ id: string, usr: string, fecha: Date, hora_inicio: number, hora_fin: number }>(`/spaces/${id}/reserve`, {
+    const response = await axios.post<{ id: string, usr: string, fecha: Date, hora_inicio: number, hora_fin: number, asistentes: number }>(`/spaces/${id}/reserve`, {
       ownerId: usr,
+      fecha: fecha,
+      hora_inicio: hora_inicio,
+      hora_fin: hora_fin,
+      asistentes: asistentes // Añadimos el número de asistentes al cuerpo de la solicitud
     });
-
+  
     if (response.status !== 201) {
       throw new Error('No se pudo obtener los datos de la propiedad');
     }

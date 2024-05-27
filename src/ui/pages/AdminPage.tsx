@@ -236,14 +236,17 @@ const AdminPage: React.FC = () => {
       <div className='w-full h-full flex justify-center items-center md:pb-40 px-6'>
         {switchPosition ? ( // Mostrar DIV 1 si switchPosition es true
         <div className='h-full md:w-1/2 px-2 w-full '>
-          <span className="text-2xl font-bold mb-4 text-primary">Reservas</span>
-            <span className='text-2xl font-bold mb-4 ml-40 text-primary'><button onClick={handleSwitchToggle}><MdOutlineSwitchRight /> {switchPosition}</button></span>
+          <span className="text-2xl font-bold mb-4 text-primary">Reservas</span> 
+            <span className='text-2xl font-bold mb-4 ml-40 text-primary'><button onClick={handleSwitchToggle}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="h-6 w-6 inline-block">
+              <path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/></svg> {switchPosition}</button></span>
               <ReserveList list={validReserves} onCancel={handleCancelReserve} onAccept={handleAcceptReserve} />
           </div>
           ) : ( // Mostrar DIV 2 si switchPosition es false
           <div className='h-full md:w-1/2 px-2 w-full'>
           <span className="text-2xl font-bold mb-4 text-primary">Reservas activas</span>
-              <span className='text-2xl font-bold mb-4 ml-20 text-primary'><button onClick={handleSwitchToggle}><MdOutlineSwitchLeft /> {switchPosition}</button></span>
+              <span className='text-2xl font-bold mb-4 ml-20 text-primary'><button onClick={handleSwitchToggle}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="h-6 w-6 inline-block">
+          <path d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/>
+        </svg> {switchPosition}</button></span>
               <ReserveList list={activeReserves} onCancel={handleCancelReserve} onAccept={handleAcceptReserve} />
             </div>
           )}
