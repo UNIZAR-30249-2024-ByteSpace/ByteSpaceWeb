@@ -14,7 +14,8 @@ import { chooseColor } from '../../utils/kindsSelector';
 import { HttpSpaceRepo } from '../../infraestructure/http/SpaceRepo';
 import { NavLink, useParams  } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+
 
 const spaceRepo: ISpaceRepo = new HttpSpaceRepo();
 const minDate = new Date();
@@ -107,74 +108,90 @@ const SpacePage: React.FC = () => {
   };
 
   // Función para manejar la reserva
+  // Función para manejar la reserva
   const handleReservation = async () => {
     try {
-      if (!date || !startTime || !endTime || startTime >= endTime) {
-        console.error('Debe seleccionar una fecha y hora de inicio y fin');
-        toast.error('Debe seleccionar una fecha y hora de inicio y fin', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        });
-        return;
-      }
-  
-      if (spaceId) {
-        if (user) { // Verificar si el usuario está autenticado
-          console.log("Entro a reservar")
-          console.log("User: " + user.id)
-          const response = await axios.post(`http://localhost:3000/api/spaces/${spaceId}/reserve`, {
-            idUsuario: user.id, // Pasar el nombre de usuario autenticado como idUsuario
-            fecha: date,
-            horaInicio: parseInt(startTime.split(':')[0]),
-            horaFin: parseInt(endTime.split(':')[0]),
-            asistentes: attendees // Añadir el número de asistentes
-          });
-          console.log('Reserva exitosa:', response.data.message);
-          toast.success(response.data.message, {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-          });
-
-        } else {
-          console.error('El usuario no está autenticado');
-          toast.error('Debe estar autenticado para hacer una reserva', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-          });
+        if (!date || !startTime || !endTime || startTime >= endTime) {
+            console.error('Debe seleccionar una fecha y hora de inicio y fin');
+            toast.error('Debe seleccionar una fecha y hora de inicio y fin', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+            });
+            return;
         }
-      } else {
-        console.error('El ID del espacio es undefined');
-      }
+
+        if (spaceId) {
+            if (user) { // Verificar si el usuario está autenticado
+                console.log("Entro a reservar")
+                console.log("User: " + user.id)
+                const response = await axios.post(`http://localhost:3000/api/spaces/${spaceId}/reserve`, {
+                    idUsuario: user.id, // Pasar el nombre de usuario autenticado como idUsuario
+                    fecha: date,
+                    horaInicio: parseInt(startTime.split(':')[0]),
+                    horaFin: parseInt(endTime.split(':')[0]),
+                    asistentes: attendees // Añadir el número de asistentes
+                });
+                console.log('Reserva exitosa:', response.data.message);
+                toast.success(response.data.message, {
+                    position: 'top-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                });
+
+            } else {
+                console.error('El usuario no está autenticado');
+                toast.error('Debe estar autenticado para hacer una reserva', {
+                    position: 'top-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                });
+            }
+        } else {
+            console.error('El ID del espacio es undefined');
+        }
     } catch (error) {
-      console.error('Error al realizar la reserva:', error);
-      toast.error('Error al realizar la reserva', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-      });
+        console.error('Error al realizar la reserva:', error);
+
+        // Verificar si el error es un objeto y tiene una propiedad 'response'
+        if (error instanceof AxiosError && error.response && error.response.data && error.response.data.error) {
+            toast.error('Error al realizar la reserva: ' + error.response.data.error, {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+            });
+        } else {
+            toast.error('Error al realizar la reserva', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+            });
+        }
     }
   };
   
