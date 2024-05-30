@@ -131,7 +131,6 @@ export class HttpSpaceRepo {
       throw error;
     }
   }
-  
 
   async reserveById(
     id: string,
@@ -155,7 +154,39 @@ export class HttpSpaceRepo {
     console.log(response.data);
     return response.data.id;
   }
+
+  async modifyById(
+    id: string,
+    reservable: boolean,
+    categoria: string,
+    asignadoA: string,
+    porcentajeOcupacion: number
+  ): Promise<string> {
+    try {
+      const response = await axios.post<{ id: string }>(
+        `http://localhost:3000/api/spaces/actualizarEspacio`,
+        {
+          id: id,
+          reservable: reservable,
+          categoria: categoria,
+          asignadoA: asignadoA,
+          porcentajeOcupacion: porcentajeOcupacion
+        }
+      );
+  
+      if (response.status !== 201) {
+        throw new Error('No se pudo actualizar el espacio');
+      }
+  
+      console.log(response.data);
+      return response.data.id;
+    } catch (error) {
+      console.error('Error al modificar el espacio:', error);
+      throw new Error('Error al modificar el espacio');
+    }
+  }
 }
+
 
 function mapTipoToKind(tipo: string): Kind {
   switch (tipo) {

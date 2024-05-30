@@ -127,6 +127,13 @@ const DesktopSideBarContent: FC = () => {
               </Link>
             </div>
           )}
+          {hasAdminRole() && (
+            <div className='fill-secondary hover:fill-hover h-8 w-8 mb-12'>
+              <Link to='/modify'>
+                <img src='/src/assets/wrench.svg' alt='Modify' />
+              </Link>
+            </div>
+          )}
         </div>
   
         {/* Exit button */}

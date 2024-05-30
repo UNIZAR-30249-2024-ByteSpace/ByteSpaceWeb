@@ -110,13 +110,13 @@ const SearchPage: React.FC = () => {
           <div className="mt-8 col-span-2 flex justify-center">
             <div>
               <NavLink to="/home" 
-                className="text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center ml-8"
+                className="text-gray-800 font-bold py-2 px-4 rounded inline-flex border border-gray-300 items-center ml-8"
                 style={{ backgroundColor: '#81A1C1', fontSize: '1.5rem', lineHeight: '2rem' }}>
                 Volver
               </NavLink>
             </div>
             <div className="ml-4">
-              <button className="text-white font-bold py-2 px-4 rounded inline-flex"
+              <button className="text-white font-bold py-2 px-4 rounded border border-gray-300 inline-flex"
                 style={{ backgroundColor: '#BEE3F8', fontSize: '1.5rem', lineHeight: '2rem' }}
                 onClick={handleSearch}>
                 Buscar

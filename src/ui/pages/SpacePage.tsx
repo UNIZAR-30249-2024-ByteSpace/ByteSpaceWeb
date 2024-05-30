@@ -205,14 +205,14 @@ const SpacePage: React.FC = () => {
               </div>
               <div className="flex items-center">
                 <p className="font-bold text-primary mr-2">Nº máximo de ocupantes:</p>
-                <p>{space.maxOcupantes} personas</p>
+                <p>{Math.floor(space.maxOcupantes * (space.porcentajeOcupacion / 100))} personas</p>
               </div>
               <div className="flex items-center">
                 <p className="font-bold text-primary mr-2">Reservable:</p>
                 <p>{space.reservable ? "Sí" : "No"}</p>
               </div>
               <div className="flex items-center">
-                <p className="font-bold text-primary mr-2">Pertenece a:</p>
+                <p className="font-bold text-primary mr-2">Asignado a:</p>
                 <p>{space.asignadoA}</p>
               </div>
             </div>
@@ -280,13 +280,13 @@ const SpacePage: React.FC = () => {
             <div className="mt-16 ml-8 flex justify-between">
               <div>
                 <NavLink to="/home" 
-                  className="text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center ml-8"
+                  className="text-gray-800 font-bold py-2 px-4 rounded inline-flex border border-gray-300 items-center ml-8"
                   style={{ backgroundColor: '#81A1C1', fontSize: '1.5rem', lineHeight: '2rem' }}>
                   Volver
                 </NavLink>
               </div>
               <div className="">
-                <button className="text-white font-bold py-2 px-4 rounded inline-flex ml-32 "
+                <button className="text-white font-bold py-2 px-4 rounded border border-gray-300 inline-flex ml-32 "
                   style={{ backgroundColor: '#BEE3F8', fontSize: '1.5rem', lineHeight: '2rem' }}
                   onClick={handleReservation}>
                   Reservar

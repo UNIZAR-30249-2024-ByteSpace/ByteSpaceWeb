@@ -5,4 +5,5 @@ export interface ISpaceRepo {
   getAllSpaces(): Promise<Space[]>; // Todos los espacios reservables
   getSpaceById(id: string): Promise<Space>; // Espacio específico
   reserveById(id: string, usr:string, fecha: Date, horaInicio: number, horaFin: number, asistentes: number): Promise<string>; // Realizar reserva
+  modifyById(id: string, reservable:boolean, categoria: string, asginadoA: string, porcentajeOcupacion: number): Promise<string>; // Realizar reserva
 }
