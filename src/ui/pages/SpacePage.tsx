@@ -130,7 +130,7 @@ const SpacePage: React.FC = () => {
             if (user) { // Verificar si el usuario está autenticado
                 console.log("Entro a reservar")
                 console.log("User: " + user.id)
-                const response = await axios.post(`http://localhost:3000/api/spaces/${spaceId}/reserve`, {
+                const response = await axios.post(`http://localhost:3000/api/reserve/${spaceId}/reserve`, {
                     idUsuario: user.id, // Pasar el nombre de usuario autenticado como idUsuario
                     fecha: date,
                     horaInicio: parseInt(startTime.split(':')[0]),
