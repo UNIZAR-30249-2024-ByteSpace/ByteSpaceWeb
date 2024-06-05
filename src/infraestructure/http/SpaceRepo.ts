@@ -131,7 +131,7 @@ export class HttpSpaceRepo {
     hora_fin: number,
     asistentes: number 
   ): Promise<string> {
-    const response = await axios.post<{ id: string, usr: string, fecha: Date, hora_inicio: number, hora_fin: number, asistentes: number }>(`/spaces/${id}/reserve`, {
+    const response = await axios.post<{ id: string, usr: string, fecha: Date, hora_inicio: number, hora_fin: number, asistentes: number }>(`/reserve/${id}/reserve`, {
       ownerId: usr,
       fecha: fecha,
       hora_inicio: hora_inicio,
