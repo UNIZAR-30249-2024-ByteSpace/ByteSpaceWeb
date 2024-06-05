@@ -99,28 +99,19 @@ export class HttpSpaceRepo {
       if (response.status !== 200) {
         throw new Error('No se pudo obtener las propiedades');
       }
-      
+
       const spaceDto = response.data;
-      console.log('DTO del espacio:', spaceDto);
-      console.log("Existe 0 :", spaceDto.hasOwnProperty('0'));
-      if (spaceDto.hasOwnProperty('0')) {
-        const tipo = spaceDto['0'].tipo;
-        console.log('Tipo bueno?:', tipo);
-      } else {
-        console.log('El valor 0 no está presente en el objeto DTO.');
-      }
-      
       const space: Space = {
-        id: spaceDto['0'].id,
-        tamanio: spaceDto['0'].tamanio,
-        tipo: mapTipoToKind(spaceDto['0'].tipo),
-        maxOcupantes: spaceDto['0'].maxOcupantes,
-        informacion: spaceDto['0'].informacion,
-        reservable: spaceDto['0'].reservable,
-        categoria: mapTipoToKind(spaceDto['0'].categoria),
-        porcentajeOcupacion: spaceDto['0'].porcentajeOcupacion,
-        planta: spaceDto['0'].planta,
-        asignadoA: spaceDto['0'].asignadoA,
+        id: spaceDto.id,
+        tamanio: spaceDto.tamanio,
+        tipo: mapTipoToKind(spaceDto.tipo),
+        maxOcupantes: spaceDto.maxOcupantes,
+        informacion: spaceDto.informacion,
+        reservable: spaceDto.reservable,
+        categoria: mapTipoToKind(spaceDto.categoria),
+        porcentajeOcupacion: spaceDto.porcentajeOcupacion,
+        planta: spaceDto.planta,
+        asignadoA: spaceDto.asignadoA,
       };
   
       console.log('Espacio mapeado:', space);

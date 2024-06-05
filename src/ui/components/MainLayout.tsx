@@ -11,8 +11,11 @@ import Logo from '/src/assets/tree-city-solid.svg';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../components/AuthContext'; // Importa el hook useAuth
 
-const capitalizeFirstLetter = (word: string): string => {
-  return word.charAt(0).toUpperCase() + word.slice(1);
+const capitalizeFirstLetter = (word: string) => {
+  if (typeof word !== 'string') {
+      return '';
+  }
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 };
 
 const rolesPermitidos = [
@@ -63,6 +66,7 @@ const menuOptions: menuOption[] = [
 const DesktopHeader: FC = () => {
   const { user } = useAuth(); // Obtén el usuario del contexto de autenticación
   const userName = user ? user.id : '';
+  console.log("GOLA")
   console.log(user?.departamento)
   
   const userRol = user ? capitalizeFirstLetter(user.rol) : '';
