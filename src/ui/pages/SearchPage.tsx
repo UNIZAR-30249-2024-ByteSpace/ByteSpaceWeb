@@ -41,7 +41,7 @@ const SearchPage: React.FC = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/spaces/search', {
+      const response = await axios.get('http://localhost:4000/api/spaces/search', {
         params: {
           id,
           categoria,

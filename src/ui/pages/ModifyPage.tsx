@@ -52,7 +52,7 @@ const ModifyPage: React.FC = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/spaces/search', {
+      const response = await axios.get('http://localhost:4000/api/spaces/search', {
         params: {
           id,
           categoria,
@@ -73,7 +73,7 @@ const ModifyPage: React.FC = () => {
 
   const handleEdit = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/api/spaces/actualizarEspacio', {
+      const response = await axios.post('http://localhost:4000/api/spaces/actualizarEspacio', {
           id,
           reservable,
           categoria,
@@ -81,7 +81,7 @@ const ModifyPage: React.FC = () => {
           porcentajeOcupacion
       });
 
-      const response2 = await axios.get('http://localhost:3000/api/spaces/search', {
+      const response2 = await axios.get('http://localhost:4000/api/spaces/search', {
         params: {
           id,
           categoria,

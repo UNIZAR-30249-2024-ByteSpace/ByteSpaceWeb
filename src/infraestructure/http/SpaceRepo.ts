@@ -35,7 +35,7 @@ export class HttpSpaceRepo {
     console.log("PASO 1 ");
     
     try {
-      const response = await axios.get<SpaceDTO[]>('http://localhost:3000/api/spaces/', {
+      const response = await axios.get<SpaceDTO[]>('http://localhost:4000/api/spaces/', {
         headers: {
           accept: 'application/json',
         },
@@ -87,7 +87,7 @@ export class HttpSpaceRepo {
     }
 
     try {
-      const response = await axios.get<any>(`http://localhost:3000/api/spaces/${id}`, {
+      const response = await axios.get<any>(`http://localhost:4000/api/spaces/${id}`, {
         headers: {
           accept: 'application/json',
         },
@@ -155,7 +155,7 @@ export class HttpSpaceRepo {
   ): Promise<string> {
     try {
       const response = await axios.post<{ id: string }>(
-        `http://localhost:3000/api/spaces/actualizarEspacio`,
+        `http://localhost:4000/api/spaces/actualizarEspacio`,
         {
           id: id,
           reservable: reservable,

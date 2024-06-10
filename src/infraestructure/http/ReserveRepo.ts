@@ -24,7 +24,7 @@ export class HttpReserveRepo implements IReserveRepo {
   
   async getAllReserves(id: string): Promise<Reserve[]> {
     try {
-      const response = await axios.get<Reserve[]>(`http://localhost:3000/api/reserve/${id}`, {
+      const response = await axios.get<Reserve[]>(`http://localhost:4000/api/reserve/${id}`, {
         headers: {
           accept: 'application/json',
         },
@@ -43,7 +43,7 @@ export class HttpReserveRepo implements IReserveRepo {
 
   async getAllReservesAdmin(): Promise<Reserve[]> {
     try {
-      const response = await axios.get<Reserve[]>('http://localhost:3000/api/reserve/admin', {
+      const response = await axios.get<Reserve[]>('http://localhost:4000/api/reserve/admin', {
         headers: {
           accept: 'application/json',
         },
@@ -81,7 +81,7 @@ export class HttpReserveRepo implements IReserveRepo {
 
   async cancelReserveById(id: string): Promise<string> { // Cambiado el tipo de retorno
     try {
-      const response = await axios.delete<{ id: string }>(`http://localhost:3000/api/reserve/${id}/cancel`, {
+      const response = await axios.delete<{ id: string }>(`http://localhost:4000/api/reserve/${id}/cancel`, {
         headers: {
           accept: 'application/json',
         },
@@ -99,7 +99,7 @@ export class HttpReserveRepo implements IReserveRepo {
 
   async acceptReserveById(id: string): Promise<string> { // Cambiado el tipo de retorno
     try {
-      const response = await axios.post<{ id: string }>(`http://localhost:3000/api/reserve/${id}/accept`, {
+      const response = await axios.post<{ id: string }>(`http://localhost:4000/api/reserve/${id}/accept`, {
         headers: {
           accept: 'application/json',
         },
