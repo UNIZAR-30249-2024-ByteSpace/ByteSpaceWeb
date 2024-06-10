@@ -3,16 +3,16 @@ import axios from 'axios';
 export type Kind = 'aula' | 'salacomun' | 'seminario' | 'laboratorio' | 'despacho';
 
 export type Space = {
-  id: string;
-  tamanio: number;
-  tipo: string; // Utiliza la enumeración Kind en lugar de un tipo string
-  maxOcupantes: number;
-  informacion: string;
-  reservable: boolean;
-  categoria: string;
-  porcentajeOcupacion: number;
-  planta: number;
-  asignadoA: string;
+  _id: string;
+  _tamanio: number;
+  _tipo: string; // Utiliza la enumeración Kind en lugar de un tipo string
+  _maxOcupantes: number;
+  _informacion: string;
+  _reservable: boolean;
+  _categoria: string;
+  _porcentajeOcupacion: number;
+  _planta: number;
+  _asignadoA: string;
 };
 
 
@@ -48,16 +48,16 @@ export class HttpSpaceRepo {
       return response.data.map((spaceDto) => {
         console.log('DTO del espacio:', spaceDto);
         const prop: Space = {
-          id: spaceDto._id,
-          tamanio: spaceDto._tamanio,
-          tipo: spaceDto._tipo, // Mapear el tipo al tipo Kind
-          maxOcupantes: spaceDto._maxOcupantes,
-          informacion: spaceDto._informacion,
-          reservable: spaceDto._reservable,
-          categoria: spaceDto._categoria,
-          porcentajeOcupacion: spaceDto._porcentajeOcupacion,
-          planta: spaceDto._planta,
-          asignadoA: spaceDto._asignadoA,
+          _id: spaceDto._id,
+          _tamanio: spaceDto._tamanio,
+          _tipo: spaceDto._tipo, // Mapear el tipo al tipo Kind
+          _maxOcupantes: spaceDto._maxOcupantes,
+          _informacion: spaceDto._informacion,
+          _reservable: spaceDto._reservable,
+          _categoria: spaceDto._categoria,
+          _porcentajeOcupacion: spaceDto._porcentajeOcupacion,
+          _planta: spaceDto._planta,
+          _asignadoA: spaceDto._asignadoA,
         };
         console.log('Espacio mapeado:', prop);
         return prop;
@@ -69,6 +69,7 @@ export class HttpSpaceRepo {
   }
 
   async getSpaceById(id: string): Promise<Space> {
+    console.log("ID: " + id)
     interface SpaceDTO {
       _id: string;
       _tamanio: number;
@@ -97,16 +98,16 @@ export class HttpSpaceRepo {
 
       const spaceDto = response.data;
       const space: Space = {
-        id: spaceDto._id,
-        tamanio: spaceDto._tamanio,
-        tipo: spaceDto._tipo, // Mapear el tipo al tipo Kind
-        maxOcupantes: spaceDto._maxOcupantes,
-        informacion: spaceDto._informacion,
-        reservable: spaceDto._reservable,
-        categoria: spaceDto._categoria,
-        porcentajeOcupacion: spaceDto._porcentajeOcupacion,
-        planta: spaceDto._planta,
-        asignadoA: spaceDto._asignadoA,
+        _id: spaceDto._id,
+        _tamanio: spaceDto._tamanio,
+        _tipo: spaceDto._tipo, // Mapear el tipo al tipo Kind
+        _maxOcupantes: spaceDto._maxOcupantes,
+        _informacion: spaceDto._informacion,
+        _reservable: spaceDto._reservable,
+        _categoria: spaceDto._categoria,
+        _porcentajeOcupacion: spaceDto._porcentajeOcupacion,
+        _planta: spaceDto._planta,
+        _asignadoA: spaceDto._asignadoA,
       };
   
       console.log('Espacio mapeado:', space);

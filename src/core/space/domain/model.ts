@@ -1,14 +1,14 @@
 export type Kind = 'aula' | 'salacomun' | 'seminario' | 'laboratorio' | 'despacho';
 
 export type Space = {
-  id: string;
-  tamanio: number;
-  tipo: Kind; 
-  maxOcupantes: number;
-  informacion: string;
-  reservable: boolean;
-  categoria: Kind; // Utiliza la enumeración Kind en lugar de un tipo string
-  porcentajeOcupacion: number;
-  planta: number;
-  asignadoA: string;
+  _id: string;
+  _tamanio: number;
+  _tipo: Kind; 
+  _maxOcupantes: number;
+  _informacion: string;
+  _reservable: boolean;
+  _categoria: Kind; // Utiliza la enumeración Kind en lugar de un tipo string
+  _porcentajeOcupacion: number;
+  _planta: number;
+  _asignadoA: string;
 };

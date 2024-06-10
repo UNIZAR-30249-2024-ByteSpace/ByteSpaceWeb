@@ -1,9 +1,9 @@
 export type Reserve = {
-  id: string;
-  fecha: Date;
-  horaInicio: number;
-  horaFin: number,
-  idPersona: string,
-  idEspacio: string,
-  potencialInvalida: boolean;
+  _id: string;
+  _fecha: Date;
+  _horaInicio: number;
+  _horaFin: number,
+  _idPersona: string,
+  _idEspacio: string,
+  _potencialInvalida: boolean;
 };

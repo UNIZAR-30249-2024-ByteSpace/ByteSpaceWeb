@@ -58,17 +58,17 @@ const AdminPage: React.FC = () => {
     fechaHoraActual.setUTCHours(0, 0, 0, 0);
     const fechaActualISOString = fechaHoraActual.toISOString();
 
-    const updatedValidReserves = reservesList.filter(reserve => !reserve.potencialInvalida);
-    const updatedInvalidReserves = reservesList.filter(reserve => reserve.potencialInvalida);
+    const updatedValidReserves = reservesList.filter(reserve => !reserve._potencialInvalida);
+    const updatedInvalidReserves = reservesList.filter(reserve => reserve._potencialInvalida);
 
     // Reservas activas
     const updatedActiveReserves = reservesList.filter(reserve => {
-      const reserveFecha = new Date(reserve.fecha).toISOString().split('T')[0];
+      const reserveFecha = new Date(reserve._fecha).toISOString().split('T')[0];
       const fechaActual = fechaActualISOString.split('T')[0];
       return (
         reserveFecha === fechaActual &&
-        reserve.horaInicio <= horaActual &&
-        horaActual <= reserve.horaFin
+        reserve._horaInicio <= horaActual &&
+        horaActual <= reserve._horaFin
       );
     });
     
@@ -119,17 +119,17 @@ const AdminPage: React.FC = () => {
     fechaHoraActual.setUTCHours(0, 0, 0, 0);
     const fechaActualISOString = fechaHoraActual.toISOString();
 
-    const updatedValidReserves = reservesList.filter(reserve => !reserve.potencialInvalida);
-    const updatedInvalidReserves = reservesList.filter(reserve => reserve.potencialInvalida);
+    const updatedValidReserves = reservesList.filter(reserve => !reserve._potencialInvalida);
+    const updatedInvalidReserves = reservesList.filter(reserve => reserve._potencialInvalida);
 
     // Reservas activas
     const updatedActiveReserves = reservesList.filter(reserve => {
-      const reserveFecha = new Date(reserve.fecha).toISOString().split('T')[0];
+      const reserveFecha = new Date(reserve._fecha).toISOString().split('T')[0];
       const fechaActual = fechaActualISOString.split('T')[0];
       return (
         reserveFecha === fechaActual &&
-        reserve.horaInicio <= horaActual &&
-        horaActual <= reserve.horaFin
+        reserve._horaInicio <= horaActual &&
+        horaActual <= reserve._horaFin
       );
     });
     
@@ -193,17 +193,17 @@ const AdminPage: React.FC = () => {
     fechaHoraActual.setUTCHours(0, 0, 0, 0);
     const fechaActualISOString = fechaHoraActual.toISOString();
 
-    const updatedValidReserves = reservesList.filter(reserve => !reserve.potencialInvalida);
-    const updatedInvalidReserves = reservesList.filter(reserve => reserve.potencialInvalida);
+    const updatedValidReserves = reservesList.filter(reserve => !reserve._potencialInvalida);
+    const updatedInvalidReserves = reservesList.filter(reserve => reserve._potencialInvalida);
 
     // Reservas activas
     const updatedActiveReserves = reservesList.filter(reserve => {
-      const reserveFecha = new Date(reserve.fecha).toISOString().split('T')[0];
+      const reserveFecha = new Date(reserve._fecha).toISOString().split('T')[0];
       const fechaActual = fechaActualISOString.split('T')[0];
       return (
         reserveFecha === fechaActual &&
-        reserve.horaInicio <= horaActual &&
-        horaActual <= reserve.horaFin
+        reserve._horaInicio <= horaActual &&
+        horaActual <= reserve._horaFin
       );
     });
     
