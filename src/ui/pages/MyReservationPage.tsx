@@ -52,8 +52,8 @@ const MyReservationPage: React.FC = () => {
 
   useEffect(() => {
     // Actualizar listas de reservas válidas e inválidas cuando reservesList cambie
-    const updatedValidReserves = reservesList.filter(reserve => !reserve.potencialInvalida);
-    const updatedInvalidReserves = reservesList.filter(reserve => reserve.potencialInvalida);
+    const updatedValidReserves = reservesList.filter(reserve => !reserve._potencialInvalida);
+    const updatedInvalidReserves = reservesList.filter(reserve => reserve._potencialInvalida);
     setValidReserves(updatedValidReserves);
     setInvalidReserves(updatedInvalidReserves);
   }, [reservesList]);
@@ -105,8 +105,8 @@ const MyReservationPage: React.FC = () => {
       }
   
       // Actualizar listas de reservas válidas e inválidas cuando reservesList cambie
-      const updatedValidReserves = reservesList.filter(reserve => !reserve.potencialInvalida);
-      const updatedInvalidReserves = reservesList.filter(reserve => reserve.potencialInvalida);
+      const updatedValidReserves = reservesList.filter(reserve => !reserve._potencialInvalida);
+      const updatedInvalidReserves = reservesList.filter(reserve => reserve._potencialInvalida);
       setValidReserves(updatedValidReserves);
       setInvalidReserves(updatedInvalidReserves);
 
@@ -164,8 +164,8 @@ const MyReservationPage: React.FC = () => {
       }
   
       // Actualizar listas de reservas válidas e inválidas cuando reservesList cambie
-      const updatedValidReserves = reservesList.filter(reserve => !reserve.potencialInvalida);
-      const updatedInvalidReserves = reservesList.filter(reserve => reserve.potencialInvalida);
+      const updatedValidReserves = reservesList.filter(reserve => !reserve._potencialInvalida);
+      const updatedInvalidReserves = reservesList.filter(reserve => reserve._potencialInvalida);
       setValidReserves(updatedValidReserves);
       setInvalidReserves(updatedInvalidReserves);
 
