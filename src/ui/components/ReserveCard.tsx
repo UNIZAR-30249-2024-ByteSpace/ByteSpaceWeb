@@ -27,7 +27,8 @@ const ReserveCard: FC<Props> = ({ reserve, onCancel, onAccept }) => {
     const fetchSpace = async () => {
       const spaceRepo: ISpaceRepo = new HttpSpaceRepo();
       try {
-        const fetchedSpace = await spaceRepo.getSpaceById(reserve.idEspacio); 
+        console.log("ID DEL ESPACIO: " + reserve._idEspacio)
+        const fetchedSpace = await spaceRepo.getSpaceById(reserve._idEspacio); 
         console.log('Espacio obtenido:', fetchedSpace); // Agrega este console.log
         setSpace(fetchedSpace);
       } catch (error) {
@@ -36,40 +37,40 @@ const ReserveCard: FC<Props> = ({ reserve, onCancel, onAccept }) => {
     };
 
     fetchSpace();
-  }, [reserve.idEspacio]);
+  }, [reserve._idEspacio]);
 
-  const formattedDate = new Date(reserve.fecha).toLocaleDateString();
-  const startTime = reserve.horaInicio;
-  const endTime = reserve.horaFin;
+  const formattedDate = new Date(reserve._fecha).toLocaleDateString();
+  const startTime = reserve._horaInicio;
+  const endTime = reserve._horaFin;
 
   const { user } = useAuth(); // Obtén el usuario del contexto de autenticación
 
   console.log("USER" + user?.id)
-  console.log("RESERVA" + reserve.idPersona)
+  console.log("RESERVA" + reserve._idPersona)
 
   return (
     <div className='flex justify-between items-center border-opacity-30 border w-full rounded-3xl border-secondary py-2 px-4 mt-3 h-36'>
       <div className='flex items-center justify-between'>
         {space && (
           <>
-            {SpaceIcon(space.tipo)}
+            {SpaceIcon(space._tipo)}
             <div className='flex flex-col'>
-              <h1 className='text-xl font-bold ml-8 mb-2'>{space.informacion}</h1>
+              <h1 className='text-xl font-bold ml-8 mb-2'>{space._informacion}</h1>
               <p className='ml-8'>Fecha: {formattedDate}</p>
               <p className='ml-8'>Hora: {startTime} - {endTime}</p>
-              <p className='ml-8'>Reservado por: {reserve.idPersona}</p>
-              <p className='ml-8' style={{ color: chooseColor(space.tipo) }}>Tipo de espacio: {space.tipo}</p>
+              <p className='ml-8'>Reservado por: {reserve._idPersona}</p>
+              <p className='ml-8' style={{ color: chooseColor(space._tipo) }}>Tipo de espacio: {space._tipo}</p>
             </div>
           </>
         )}
       </div>
       <div className='flex flex-col justify-center items-center'>
-        {(user?.rol=="gerente" || user?.rol=="gerente-docente-investigador") && user?.id!=reserve.idPersona && reserve.potencialInvalida && ( // Condición para mostrar el botón
-          <button className='font-bold text-xl mb-4' style={{ color: '#006400' }} onClick={() => onAccept(reserve.id)}>
+        {(user?.rol=="gerente" || user?.rol=="gerente-docente-investigador") && user?.id!=reserve._idPersona && reserve._potencialInvalida && ( // Condición para mostrar el botón
+          <button className='font-bold text-xl mb-4' style={{ color: '#006400' }} onClick={() => onAccept(reserve._id)}>
             Aceptar
           </button>
         )}
-        <button className='font-bold text-xl mb-4' style={{ color: '#FF0000' }} onClick={() => onCancel(reserve.id)}>
+        <button className='font-bold text-xl mb-4' style={{ color: '#FF0000' }} onClick={() => onCancel(reserve._id)}>
           Cancelar
         </button>
       </div>
