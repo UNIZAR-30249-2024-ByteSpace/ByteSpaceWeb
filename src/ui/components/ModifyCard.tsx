@@ -40,7 +40,7 @@ const ModifyCard: FC<Props> = ({ space }) => {
             <p className="text-lg md:text-xl font-bold text-primary ">{space._categoria}</p>
         </div>
         <div className="flex items-center mb-4">
-          <p className="font-bold text-xl text-primary">Asginado a:</p>
+          <p className="font-bold text-xl text-primary">Asignado a:</p>
           <span className="text-xl ml-2">{space._asignadoA}</span>
         </div>
         <div className="flex items-center mb-4">

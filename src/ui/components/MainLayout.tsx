@@ -22,7 +22,7 @@ const rolesPermitidos = [
   "Investigador contratado",
   "Docente-investigador",
   "Gerente-docente-investigador",
-  "Tecnico de laboratorio"
+  "Técnico de laboratorio"
 ];
 
 type Props = PropsWithChildren & {
@@ -67,7 +67,7 @@ const DesktopHeader: FC = () => {
   const { user } = useAuth(); // Obtén el usuario del contexto de autenticación
   const userName = user ? user.id : '';
   console.log("GOLA")
-  console.log(user?.departamento)
+  console.log("Departamento: " + user?.departamento)
   
   const userRol = user ? capitalizeFirstLetter(user.rol) : '';
   const userDepartamento = user && user.departamento ? capitalizeFirstLetter(user.departamento) : '';
