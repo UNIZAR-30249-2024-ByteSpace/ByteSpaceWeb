@@ -27,7 +27,7 @@ const ReserveCard: FC<Props> = ({ reserve, onCancel, onAccept }) => {
     const fetchSpace = async () => {
       const spaceRepo: ISpaceRepo = new HttpSpaceRepo();
       try {
-        console.log("ID DEL ESPACIO: " + reserve._idEspacio)
+        console.log("idEspacio: " + reserve)
         const fetchedSpace = await spaceRepo.getSpaceById(reserve._idEspacio); 
         console.log('Espacio obtenido:', fetchedSpace); // Agrega este console.log
         setSpace(fetchedSpace);

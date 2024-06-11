@@ -23,7 +23,7 @@ const ModifyList: FC<Props> = ({ list, size }) => {
   return (
     <div className='w-full overflow-y-scroll overflow-x-clip pr-2 h-full '>
       {list.map((p, k) => (
-        <NavLink className='w-full ' key={k} to={`/space/${p.id}`}>
+        <NavLink className='w-full ' key={k} to={`/space/${p._id}`}>
           {size === 'small' ? (
             <SmallSpaceCard space={p} />
           ) : (

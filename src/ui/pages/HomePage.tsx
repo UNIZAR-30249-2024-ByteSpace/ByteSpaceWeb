@@ -16,7 +16,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../components/AuthContext'; // Importa el hook useAuth
 
-const spaceRepo: ISpaceRepo = new HttpSpaceRepo();
 
 const HomePage = () => {
     const { user } = useAuth(); // Obtén el usuario del contexto de autenticación
@@ -44,7 +43,7 @@ const HomePage = () => {
             });
     }, []);
 
-    const filteredSpacesList = spacesList.filter(space => space.planta === selectedFloor); // Filtrar los espacios por planta seleccionada
+    const filteredSpacesList = spacesList.filter(space => space._planta === selectedFloor); // Filtrar los espacios por planta seleccionada
 
     // Obtener el nombre y el correo electrónico del usuario
     const userName = user ? user.username : '';

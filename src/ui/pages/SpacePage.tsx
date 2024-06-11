@@ -35,6 +35,7 @@ const SpacePage: React.FC = () => {
     const fetchSpace = async () => {
       try {
         if (spaceId) {
+          console.log("getSpaceById1")
           const spaceData = await spaceRepo.getSpaceById(spaceId);
           setSpace(spaceData);
         } else {
@@ -205,32 +206,32 @@ const SpacePage: React.FC = () => {
       <ToastContainer />
       <div className="flex">
         <div className="w-1/2 p-4">
-          <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">{space.informacion}</h1>
-          <p className="text-lg md:text-xl font-bold text-primary mb-4">Planta {space.planta}</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">{space._informacion}</h1>
+          <p className="text-lg md:text-xl font-bold text-primary mb-4">Planta {space._planta}</p>
           <div className="flex items-center mb-8">
             <div
               className="w-4 h-4 rounded-full mr-2"
-              style={{ backgroundColor: chooseColor(space.categoria) }}
+              style={{ backgroundColor: chooseColor(space._categoria) }}
             ></div>
-            <p className="text-lg md:text-xl font-bold text-primary ">{space.categoria}</p>
+            <p className="text-lg md:text-xl font-bold text-primary ">{space._categoria}</p>
           </div>
           <div className="mb-10">
             <div className="grid grid-cols-2 gap-4 text-lg">
               <div className="flex items-center">
                 <p className="font-bold text-primary mr-2">Superficie:</p>
-                <p>{space.tamanio} m2</p>
+                <p>{space._tamanio} m2</p>
               </div>
               <div className="flex items-center">
                 <p className="font-bold text-primary mr-2">Nº máximo de ocupantes:</p>
-                <p>{Math.floor(space.maxOcupantes * (space.porcentajeOcupacion / 100))} personas</p>
+                <p>{Math.floor(space._maxOcupantes * (space._porcentajeOcupacion / 100))} personas</p>
               </div>
               <div className="flex items-center">
                 <p className="font-bold text-primary mr-2">Reservable:</p>
-                <p>{space.reservable ? "Sí" : "No"}</p>
+                <p>{space._reservable ? "Sí" : "No"}</p>
               </div>
               <div className="flex items-center">
                 <p className="font-bold text-primary mr-2">Asignado a:</p>
-                <p>{space.asignadoA}</p>
+                <p>{space._asignadoA}</p>
               </div>
             </div>
           </div>
@@ -258,7 +259,7 @@ const SpacePage: React.FC = () => {
               className="custom-number-selector"
               style={{ fontSize: '1.3rem', color: 'text-primary', lineHeight: '2rem' }}
               min="1"
-              max={space.maxOcupantes}
+              max={space._maxOcupantes}
               value={attendees}
               onChange={handleAttendeesChange}
             />
