@@ -59,7 +59,7 @@ const ReserveCard: FC<Props> = ({ reserve, onCancel, onAccept }) => {
               <p className='ml-8'>Fecha: {formattedDate}</p>
               <p className='ml-8'>Hora: {startTime} - {endTime}</p>
               <p className='ml-8'>Reservado por: {reserve._idPersona}</p>
-              <p className='ml-8' style={{ color: chooseColor(space._tipo) }}>Tipo de espacio: {space._tipo}</p>
+              <p className='ml-8' style={{ color: chooseColor(space._categoria) }}>Categoria de espacio: {space._tipo}</p>
             </div>
           </>
         )}
