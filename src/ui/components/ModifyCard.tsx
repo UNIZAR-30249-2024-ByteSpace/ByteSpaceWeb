@@ -54,6 +54,14 @@ const ModifyCard: FC<Props> = ({ space }) => {
           <p className="font-bold text-xl text-primary">Porcentaje de ocupación:</p>
           <span className="text-xl ml-2">{space._porcentajeOcupacion} %</span>
         </div>
+        <div className="flex items-center mb-4">
+          <p className="font-bold text-xl text-primary">Hora inicio:</p>
+          <span className="text-xl ml-2">{space._horaInicio}:00</span>
+        </div>
+        <div className="flex items-center mb-4">
+          <p className="font-bold text-xl text-primary">Hora fin:</p>
+          <span className="text-xl ml-2">{space._horaFin}:00</span>
+        </div>
         </div>
     </div>
   );

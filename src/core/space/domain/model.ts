@@ -11,4 +11,6 @@ export type Space = {
   _porcentajeOcupacion: number;
   _planta: number;
   _asignadoA: string;
+  _horaInicio: number;
+  _horaFin: number;
 };

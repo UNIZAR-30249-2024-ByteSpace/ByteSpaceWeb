@@ -233,6 +233,10 @@ const SpacePage: React.FC = () => {
                 <p className="font-bold text-primary mr-2">Asignado a:</p>
                 <p>{space._asignadoA}</p>
               </div>
+              <div className="flex items-center">
+                <p className="font-bold text-primary mr-2">Horario:</p>
+                <p>{space._horaInicio}-{space._horaFin}</p>
+              </div>
             </div>
           </div>
         </div>

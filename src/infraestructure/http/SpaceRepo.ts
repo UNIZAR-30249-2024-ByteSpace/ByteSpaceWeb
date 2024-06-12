@@ -13,6 +13,8 @@ export type Space = {
   _porcentajeOcupacion: number;
   _planta: number;
   _asignadoA: string;
+  _horaInicio: number;
+  _horaFin: number;
 };
 
 
@@ -30,6 +32,8 @@ export class HttpSpaceRepo {
       _porcentajeOcupacion: number;
       _planta: number;
       _asignadoA: string;
+      _horaInicio: number;
+      _horaFin: number;
     }
     
     try {
@@ -58,6 +62,8 @@ export class HttpSpaceRepo {
           _porcentajeOcupacion: spaceDto._porcentajeOcupacion,
           _planta: spaceDto._planta,
           _asignadoA: spaceDto._asignadoA,
+          _horaInicio: spaceDto._horaInicio,
+          _horaFin: spaceDto._horaFin,
         };
         console.log('Espacio mapeado:', prop);
         return prop;
@@ -81,6 +87,8 @@ export class HttpSpaceRepo {
       _porcentajeOcupacion: number;
       _planta: number;
       _asignadoA: string;
+      _horaInicio: number;
+      _horaFin: number;
     }
 
     try {
@@ -108,6 +116,8 @@ export class HttpSpaceRepo {
         _porcentajeOcupacion: spaceDto._porcentajeOcupacion,
         _planta: spaceDto._planta,
         _asignadoA: spaceDto._asignadoA,
+        _horaInicio: spaceDto._horaInicio,
+        _horaFin: spaceDto._horaFin,
       };
   
       console.log('Espacio mapeado:', space);

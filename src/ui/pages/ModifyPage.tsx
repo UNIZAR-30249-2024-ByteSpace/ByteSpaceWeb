@@ -21,6 +21,8 @@ const ModifyPage: React.FC = () => {
   const [id, setId] = useState<string>('');
   const [asignadoA, setAssignedTo] = useState('EINA');
   const [otroCategoria, setOtroCategoria] = useState<string>('');
+  const [horaInicio, setStartTime] = useState<string>('8');
+  const [horaFin, setEndTime] = useState<string>('21');
 
   const handleOtroCategoriaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setOtroCategoria(event.target.value);
@@ -50,6 +52,38 @@ const ModifyPage: React.FC = () => {
     setCapacidad(parseInt(event.target.value));
   };
 
+  const handleStartTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedStartTime = e.target.value;
+    setStartTime(selectedStartTime);
+    const nextHour = parseInt(selectedStartTime.split(':')[0]) + 1;
+    const formattedNextHour = nextHour.toString().padStart(2, '0');
+    setEndTime(`${formattedNextHour}:00`);
+  };
+
+  const handleEndTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedEndTime = e.target.value;
+    setEndTime(selectedEndTime);
+  };
+
+  const generateTimeOptions = () => {
+    const options = [];
+    let time = new Date();
+    time.setHours(8, 0, 0);
+  
+    while (time.getHours() < 22) {
+      const hour = time.getHours();
+      options.push(
+        <option key={hour} value={hour}>
+          {hour}
+        </option>
+      );
+      time.setHours(time.getHours() + 1);
+    }
+  
+    return options;
+  };
+  
+
   const handleSearch = async () => {
     try {
       const response = await axios.get('http://localhost:4000/api/spaces/search', {
@@ -78,7 +112,9 @@ const ModifyPage: React.FC = () => {
           reservable,
           categoria,
           asignadoA,
-          porcentajeOcupacion
+          porcentajeOcupacion,
+          horaInicio,
+          horaFin
       });
 
       const response2 = await axios.get('http://localhost:4000/api/spaces/search', {
@@ -171,6 +207,33 @@ const ModifyPage: React.FC = () => {
                 <option key={i} value={i * 10}>{i * 10} %</option>
               ))}
             </select>
+          </div>
+          <div>
+              <p className="text-lg md:text-xl font-bold text-primary mb-4">Hora de inicio</p>
+              <select
+                id="start-time"
+                name="start-time"
+                className="mt-1 p-2 block w-full border-gray-300 text-lg rounded-md"
+                style={{ fontSize: '1.3rem', color: 'text-primary', lineHeight: '2rem' }}
+                value={horaInicio}
+                onChange={handleStartTimeChange}
+              >
+                {generateTimeOptions()}
+              </select>
+          </div>
+          <div>
+              <p className="text-lg md:text-xl font-bold text-primary mb-4">Hora de fin</p>
+              <select
+                id="end-time"
+                name="end-time"
+                className="mt-1 p-2 block w-full border-gray-300 text-lg rounded-md"
+                style={{ fontSize: '1.3rem', color: 'text-primary', lineHeight: '2rem' }}
+                value={horaFin}
+                onChange={handleEndTimeChange}
+                disabled={!horaInicio}
+              >
+                {generateTimeOptions()}
+              </select>
           </div>
           <div className="mt-8 col-span-2 flex justify-center">
             <div>
