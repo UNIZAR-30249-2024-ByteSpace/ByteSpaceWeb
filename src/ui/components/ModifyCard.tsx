@@ -14,6 +14,13 @@ interface Props {
   space: Space;
 }
 
+const capitalizeFirstLetter = (word: string) => {
+  if (typeof word !== 'string') {
+      return '';
+  }
+  return word.charAt(0).toUpperCase() + word.slice(1);
+};
+
 const ModifyCard: FC<Props> = ({ space }) => {
   return (
     <div>
@@ -41,7 +48,7 @@ const ModifyCard: FC<Props> = ({ space }) => {
         </div>
         <div className="flex items-center mb-4">
           <p className="font-bold text-xl text-primary">Asignado a:</p>
-          <span className="text-xl ml-2">{space._asignadoA}</span>
+          <span className="text-xl ml-2">{ capitalizeFirstLetter(space._asignadoA)}</span>
         </div>
         <div className="flex items-center mb-4">
           <p className="font-bold text-xl text-primary">Porcentaje de ocupación:</p>

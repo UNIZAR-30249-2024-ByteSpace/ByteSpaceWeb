@@ -154,8 +154,8 @@ const ModifyPage: React.FC = () => {
             <p className="text-lg md:text-xl font-bold text-primary mb-4">Asignado a:</p>
             <select id="asignadoA" name="asignadoA" className="p-2 border border-gray-300 rounded-md w-full mb-4" value={asignadoA} onChange={handleAssignedChange}>
               <option value="EINA">EINA</option>
-              <option value="INGENIERIA DE SISTEMAS">Ingenieria de Sistemas</option>
-              <option value="INFORMATICA">Informatica</option>
+              <option value="ingeniería electrónica y comunicaciones">Ingeniería electrónica y comunicaciones</option>
+              <option value="informática e ingeniería de sistemas">Informática e ingeniería de sistemas</option>
               </select>
           </div>
           <div>
