@@ -37,6 +37,8 @@ const SpacePage: React.FC = () => {
         if (spaceId) {
           console.log("getSpaceById1")
           const spaceData = await spaceRepo.getSpaceById(spaceId);
+          setStartTime(spaceData._horaInicio + ":00");
+          setEndTime(spaceData._horaFin + ":00");
           setSpace(spaceData);
         } else {
           console.error('El ID del espacio es undefined');
@@ -61,9 +63,9 @@ const SpacePage: React.FC = () => {
 
   useEffect(() => {
     // Resetear la hora de inicio y fin al valor predeterminado cuando la fecha cambia
-    if (date) {
-      setStartTime('08:00');
-      setEndTime('09:00');
+    if (date && space) {
+      setStartTime(space._horaInicio + ":00");
+      setEndTime(space._horaFin + ":00");
     }
   }, [date]);
 
@@ -87,23 +89,38 @@ const SpacePage: React.FC = () => {
   };
 
   const handleAttendeesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAttendees(parseInt(e.target.value, 10));
+    let newAttendees = parseInt(e.target.value, 10);
+    if (isNaN(newAttendees) || newAttendees < 1) {
+      newAttendees = 1; // Por defecto, si no es un número válido o es menor que 1, establecer a 1
+    }
+    // Asegurarse de que no se exceda el máximo de asistentes
+    if (space) {
+      const maxAttendees = Math.floor(space._maxOcupantes * (space._porcentajeOcupacion / 100));
+      if (newAttendees > maxAttendees) {
+        newAttendees = maxAttendees; // Establecer al máximo permitido
+      }
+    }
+    setAttendees(newAttendees);
   };
+
 
   const generateTimeOptions = () => {
     const options = [];
-    let time = new Date();
-    time.setHours(8, 0, 0);
+    if (space) {
+      let time = new Date();
+      time.setHours(space._horaInicio, 0, 0);
 
-    while (time.getHours() < 22) {
-      const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      options.push(
-        <option key={formattedTime} value={formattedTime}>
-          {formattedTime}
-        </option>
-      );
-      time.setHours(time.getHours() + 1);
+      while (time.getHours() <= space._horaFin) {
+        const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        options.push(
+          <option key={formattedTime} value={formattedTime}>
+            {formattedTime}
+          </option>
+        );
+        time.setHours(time.getHours() + 1);
+      }
     }
+
 
     return options;
   };
@@ -231,7 +248,7 @@ const SpacePage: React.FC = () => {
               </div>
               <div className="flex items-center">
                 <p className="font-bold text-primary mr-2">Asignado a:</p>
-                <p>{space._asignadoA}</p>
+                <p>{space._asignadoA.charAt(0).toUpperCase() + space._asignadoA.slice(1)}</p>
               </div>
               <div className="flex items-center">
                 <p className="font-bold text-primary mr-2">Horario:</p>
