@@ -17,6 +17,18 @@ export type Space = {
   _horaFin: number;
 };
 
+export type espacio = {
+  _id: string;
+  _tamanio: number;
+  _maxOcupantes: number;
+  _informacion: string;
+  _reservable: boolean;
+  _porcentajeOcupacion: number;
+  _planta: number;
+  _horaInicio: number;
+  _horaFin: number;
+};
+
 
 export class HttpSpaceRepo {
   
@@ -34,6 +46,7 @@ export class HttpSpaceRepo {
       _asignadoA: string;
       _horaInicio: number;
       _horaFin: number;
+      _espacio: espacio;
     }
     
     try {
@@ -50,20 +63,20 @@ export class HttpSpaceRepo {
       }
       
       return response.data.map((spaceDto) => {
-        console.log('DTO del espacio:', spaceDto);
+        console.log('DTO del espacio:', spaceDto._espacio);
         const prop: Space = {
-          _id: spaceDto._id,
-          _tamanio: spaceDto._tamanio,
+          _id: spaceDto._espacio._id,
+          _tamanio: spaceDto._espacio._tamanio,
           _tipo: spaceDto._tipo, // Mapear el tipo al tipo Kind
-          _maxOcupantes: spaceDto._maxOcupantes,
-          _informacion: spaceDto._informacion,
-          _reservable: spaceDto._reservable,
+          _maxOcupantes: spaceDto._espacio._maxOcupantes,
+          _informacion: spaceDto._espacio._informacion,
+          _reservable: spaceDto._espacio._reservable,
           _categoria: spaceDto._categoria,
-          _porcentajeOcupacion: spaceDto._porcentajeOcupacion,
-          _planta: spaceDto._planta,
+          _porcentajeOcupacion: spaceDto._espacio._porcentajeOcupacion,
+          _planta: spaceDto._espacio._planta,
           _asignadoA: spaceDto._asignadoA,
-          _horaInicio: spaceDto._horaInicio,
-          _horaFin: spaceDto._horaFin,
+          _horaInicio: spaceDto._espacio._horaInicio,
+          _horaFin: spaceDto._espacio._horaFin,
         };
         console.log('Espacio mapeado:', prop);
         return prop;
@@ -106,18 +119,18 @@ export class HttpSpaceRepo {
 
       const spaceDto = response.data;
       const space: Space = {
-        _id: spaceDto._id,
-        _tamanio: spaceDto._tamanio,
+        _id: spaceDto._espacio._id,
+        _tamanio: spaceDto._espacio._tamanio,
         _tipo: spaceDto._tipo, // Mapear el tipo al tipo Kind
-        _maxOcupantes: spaceDto._maxOcupantes,
-        _informacion: spaceDto._informacion,
-        _reservable: spaceDto._reservable,
+        _maxOcupantes: spaceDto._espacio._maxOcupantes,
+        _informacion: spaceDto._espacio._informacion,
+        _reservable: spaceDto._espacio._reservable,
         _categoria: spaceDto._categoria,
-        _porcentajeOcupacion: spaceDto._porcentajeOcupacion,
-        _planta: spaceDto._planta,
+        _porcentajeOcupacion: spaceDto._espacio._porcentajeOcupacion,
+        _planta: spaceDto._espacio._planta,
         _asignadoA: spaceDto._asignadoA,
-        _horaInicio: spaceDto._horaInicio,
-        _horaFin: spaceDto._horaFin,
+        _horaInicio: spaceDto._espacio._horaInicio,
+        _horaFin: spaceDto._espacio._horaFin,
       };
   
       console.log('Espacio mapeado:', space);
